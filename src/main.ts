@@ -1,4 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./assets/css/bootstrap4-neon-glow.min.css";
+import "./assets/css/site.css";
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
