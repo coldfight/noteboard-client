@@ -18,11 +18,36 @@ export default class BoardList extends Vue {
   beforeMount() {
     console.log("BoardList beforeMount");
     this.boards = [
-      new Board(1, "Work", "This board is for work-related stuff", "lightblue", "hidden"),
-      new Board(2, "Personal", "Personal projects and such", "lightgreen", "hidden"),
-      new Board(3, "Fun", "Some fun stuff belongs here... Yay!", "lightyellow", "hidden"),
-      new Board(4, "Important", "Important stuff goes here.", "lightsalmon", "hidden"),
-    ]
+      {
+        id: 1,
+        name: "Work",
+        description: "This board is for work-related stuff",
+        color: "lightblue",
+        privacy: "hidden"
+      },
+      {
+        id: 2,
+        name: "Personal",
+        description: "Personal projects and such",
+        color: "lightgreen",
+        privacy: "hidden"
+      },
+      {
+        id: 3,
+        name: "Fun",
+        description: "Some fun stuff belongs here... Yay!",
+        color: "lightyellow",
+        privacy: "hidden"
+      },
+      {
+        id: 4,
+        name: "Important",
+        description: "Important stuff goes here.",
+        color: "lightsalmon",
+        privacy: "hidden"
+      }
+    ];
+    console.log(this.boards);
   }
 }
 </script>
