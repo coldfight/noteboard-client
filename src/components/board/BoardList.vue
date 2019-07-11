@@ -29,7 +29,7 @@ export default class BoardList extends Vue {
    * "lifecycle" hook functions
    */
   async beforeMount() {
-    this.boards = await this.retrieveBoards()
+    this.boards = await this.retrieveBoards();
   }
 
   /**

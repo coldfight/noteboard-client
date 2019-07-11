@@ -1,6 +1,6 @@
 <template>
   <div class="boardItem">
-    <div class="card-body" v-if="board" :style="{color: board.color}">
+    <div class="card-body" v-if="board" :style="{ color: board.color }">
       <h4 :id="`board_${board.id}`" class="card-title">{{ board.name }}</h4>
       <p class="card-text">{{ board.description }}</p>
       <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->

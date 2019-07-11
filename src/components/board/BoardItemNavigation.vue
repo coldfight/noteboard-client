@@ -6,7 +6,8 @@
           <router-link
             class="nav-link"
             :to="{ name: '@boardItem', params: { id: board.id } }"
-          >{{ board.name }}</router-link>
+            >{{ board.name }}</router-link
+          >
         </li>
       </ul>
     </div>
@@ -26,7 +27,6 @@ export default class BoardItemNavigation extends Vue {
    */
   @Prop({ default: null }) boards!: Array<Board>;
 
-  beforeMount() {
-  }
+  beforeMount() {}
 }
 </script>
