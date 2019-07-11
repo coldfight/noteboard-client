@@ -1,31 +1,28 @@
 <template>
   <div class="boardList">
-    <canvas
-      id="myCanvas"
-      :width="canvasWidth"
-      :height="canvasHeight"
-      style="border: 1px solid #FFF;"
-    ></canvas>
+    <BoardItemNavigation :boards="boards"></BoardItemNavigation>
+      <router-view></router-view>
     <!-- <BoardItem
       v-for="board in boards"
       :key="board.id"
       :board="board"
-    ></BoardItem> -->
+    ></BoardItem>-->
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import BoardItem from "@/components/board/BoardItem.vue";
+import BoardItemNavigation from "@/components/board/BoardItemNavigation.vue";
 import Board from "@/entities/Board";
 
 @Component({
-  components: { BoardItem }
+  components: { BoardItem, BoardItemNavigation }
 })
 export default class BoardList extends Vue {
   boards: Array<Board> = [];
-  canvasWidth: number = 800;
-  canvasHeight: number = 800;
+  width: number = 800;
+  height: number = 800;
 
   beforeMount() {
     this.boards = [
@@ -64,7 +61,6 @@ export default class BoardList extends Vue {
 
 <style scoped>
 .boardList {
-  text-align: center;
-  margin: 50px auto;
+  position: relative;
 }
 </style>

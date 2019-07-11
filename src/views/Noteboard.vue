@@ -12,3 +12,9 @@ import { Component, Vue } from "vue-property-decorator";
 })
 export default class Noteboard extends Vue {}
 </script>
+
+<style scoped>
+.noteboard {
+  padding: 50px 10px;
+}
+</style>

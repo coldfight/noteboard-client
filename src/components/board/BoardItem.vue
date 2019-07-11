@@ -1,10 +1,10 @@
 <template>
   <div class="boardItem">
-    <div>ID: {{ board.id }}</div>
+    <!-- <div>ID: {{ board.id }}</div>
     <div>Name: {{ board.name }}</div>
     <div>Description: {{ board.description }}</div>
     <div :style="{ color: board.color }">Color: {{ board.color }}</div>
-    <div>Privacy: {{ board.privacy }}</div>
+    <div>Privacy: {{ board.privacy }}</div> -->
   </div>
 </template>
 
@@ -22,6 +22,6 @@ export default class BoardItem extends Vue {
 
 <style scoped>
 .boardItem {
-  padding: 15px;
+  position: absolute;
 }
 </style>

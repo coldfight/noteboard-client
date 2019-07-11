@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Noteboard from "./views/Noteboard.vue";
 import BoardList from "./components/board/BoardList.vue";
+import BoardItem from "./components/board/BoardItem.vue";
 
 Vue.use(Router);
 
@@ -18,7 +19,13 @@ export default new Router({
           path: "",
           name: "@boardsList",
           component: BoardList,
-          children: []
+          children: [
+            {
+              path: "/boards/:id",
+              name: "@boardItem",
+              component: BoardItem
+            }
+          ]
         }
       ]
     }
