@@ -1,15 +1,15 @@
 <template>
   <div class="boardItem">
-    <div class="card-body" v-if="board" :style="{ color: board.color }">
+    <div v-if="board"  class="card-body" :style="{ color: board.color }">
       <h4 :id="`board_${board.id}`" class="card-title">{{ board.name }}</h4>
       <p class="card-text">{{ board.description }}</p>
-      <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
     </div>
+    <div v-else class="card-body"></div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import _ from "lodash";
 import Board from "@/entities/Board";
 
@@ -20,17 +20,40 @@ import boards from "@/data/boards.ts";
   components: {}
 })
 export default class BoardItem extends Vue {
+  /**
+   * "data"
+   */
   board: Board | null = null;
-  async beforeMount() {
-    this.board = await this.retrieveBoard();
+
+  /**
+   * "watch"
+   */
+  // Watch for changes to the route. If we're changing to another
+  // noteboard we're going to have to pull the new data for it.
+  @Watch("$route")
+  onRouteChanged(value: any, oldValue: any) {
+    this.retrieveBoard();
   }
 
+  /**
+   * "lifecycle" hook methods
+   */
+  beforeMount() {
+    this.retrieveBoard();
+  }
+
+  /**
+   * "methods"
+   */
   async retrieveBoard() {
-    const matchedBoards = _.filter(
-      boards,
-      (board: Board) => board.id === parseInt(this.$route.params.id)
-    );
-    return matchedBoards.length > 0 ? matchedBoards[0] : null;
+    setTimeout(() => {
+      const matchedBoards = _.filter(
+        boards,
+        (board: Board) => board.id === parseInt(this.$route.params.id)
+      );
+
+      this.board = matchedBoards.length > 0 ? matchedBoards[0] : null;
+    }, Math.random() * 1000);
   }
 }
 </script>
