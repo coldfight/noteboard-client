@@ -1,12 +1,9 @@
 <template>
   <div class="boardList">
-    <BoardItemNavigation :boards="boards"></BoardItemNavigation>
+    <div class="card text-center">
+      <BoardItemNavigation :boards="boards"></BoardItemNavigation>
       <router-view></router-view>
-    <!-- <BoardItem
-      v-for="board in boards"
-      :key="board.id"
-      :board="board"
-    ></BoardItem>-->
+    </div>
   </div>
 </template>
 
@@ -16,51 +13,30 @@ import BoardItem from "@/components/board/BoardItem.vue";
 import BoardItemNavigation from "@/components/board/BoardItemNavigation.vue";
 import Board from "@/entities/Board";
 
+// @todo: temporary until I implement API Platform to retrieve the boards
+import boards from "@/data/boards.ts";
+
 @Component({
   components: { BoardItem, BoardItemNavigation }
 })
 export default class BoardList extends Vue {
+  /**
+   * "data"
+   */
   boards: Array<Board> = [];
-  width: number = 800;
-  height: number = 800;
 
-  beforeMount() {
-    this.boards = [
-      {
-        id: 1,
-        name: "Work",
-        description: "This board is for work-related stuff",
-        color: "lightblue",
-        privacy: "hidden"
-      },
-      {
-        id: 2,
-        name: "Personal",
-        description: "Personal projects and such",
-        color: "lightgreen",
-        privacy: "hidden"
-      },
-      {
-        id: 3,
-        name: "Fun",
-        description: "Some fun stuff belongs here... Yay!",
-        color: "lightyellow",
-        privacy: "hidden"
-      },
-      {
-        id: 4,
-        name: "Important",
-        description: "Important stuff goes here.",
-        color: "lightsalmon",
-        privacy: "hidden"
-      }
-    ];
+  /**
+   * "lifecycle" hook functions
+   */
+  async beforeMount() {
+    this.boards = await this.retrieveBoards()
+  }
+
+  /**
+   * "methods"
+   */
+  async retrieveBoards() {
+    return boards;
   }
 }
 </script>
-
-<style scoped>
-.boardList {
-  position: relative;
-}
-</style>
