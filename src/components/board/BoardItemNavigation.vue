@@ -1,8 +1,15 @@
 <template>
   <div class="boardItemNavigation">
-      <div v-for="board in boards" :key="board.id">
-          <router-link :to="{name: '@boardItem', params: {id: board.id}}">{{ board.name }}</router-link>
-      </div>
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li v-for="board in boards" :key="board.id" class="nav-item">
+          <router-link
+            class="nav-link"
+            :to="{ name: '@boardItem', params: { id: board.id } }"
+          >{{ board.name }}</router-link>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -14,9 +21,12 @@ import Board from "@/entities/Board";
   components: {}
 })
 export default class BoardItemNavigation extends Vue {
+  /**
+   * "props"
+   */
   @Prop({ default: null }) boards!: Array<Board>;
+
+  beforeMount() {
+  }
 }
 </script>
-
-<style scoped>
-</style>
