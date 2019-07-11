@@ -1,15 +1,18 @@
 <template>
-  <!-- :key is required to allow transitions to work with the same component: 
-  https://forum.vuejs.org/t/solved-vue-transitions-not-working/7614  -->
-  
-  <div class="boardItem" :key="$route.params.id" style="height: 100%;">
+  <div class="boardItem" style="height: 100%;">
+    <!-- This transition is necessary because because it might not be loaded 
+    in time for the transition to nicely display this element-->
     <transition name="fade">
-      <div v-if="board" class="card-body" :style="{height: '100%', backgroundColor: board.color }">
+      <div
+        v-if="board"
+        class="card-body"
+        :style="{ height: '100%', backgroundColor: board.color }"
+      >
         <h4 :id="`board_${board.id}`" class="card-title">{{ board.name }}</h4>
         <p class="card-text">{{ board.description }}</p>
       </div>
     </transition>
-    <div v-if="!board" class="card-body" :style="{height: '100%' }">
+    <div v-if="!board" class="card-body" :style="{ height: '100%' }">
       Loading...
     </div>
   </div>
