@@ -1,5 +1,11 @@
 <template>
   <div class="boardList">
+    <canvas
+      id="myCanvas"
+      :width="canvasWidth"
+      :height="canvasHeight"
+      style="border: 1px solid #FFF;"
+    ></canvas>
     <!-- <BoardItem
       v-for="board in boards"
       :key="board.id"
@@ -18,6 +24,8 @@ import Board from "@/entities/Board";
 })
 export default class BoardList extends Vue {
   boards: Array<Board> = [];
+  canvasWidth: number = 800;
+  canvasHeight: number = 800;
 
   beforeMount() {
     this.boards = [
@@ -53,3 +61,10 @@ export default class BoardList extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.boardList {
+  text-align: center;
+  margin: 50px auto;
+}
+</style>

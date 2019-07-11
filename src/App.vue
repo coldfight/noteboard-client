@@ -14,5 +14,5 @@ import Header from "@/components/common/Header.vue";
     AppHeader: Header
   }
 })
-export default class Home extends Vue {}
+export default class App extends Vue {}
 </script>

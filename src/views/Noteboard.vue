@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="noteboard">
     <router-view></router-view>
   </div>
 </template>
@@ -10,5 +10,5 @@ import { Component, Vue } from "vue-property-decorator";
 @Component({
   components: {}
 })
-export default class Home extends Vue {}
+export default class Noteboard extends Vue {}
 </script>
