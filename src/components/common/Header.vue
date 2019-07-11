@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-dark bg-secondary">
+  <nav class="navbar navbar-dark bg-primary">
     <router-link :to="{ name: '@boardsList' }" class="navbar-brand"
       >Noteboard</router-link
     >
