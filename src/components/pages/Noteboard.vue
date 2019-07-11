@@ -1,5 +1,5 @@
 <template>
-  <div class="noteboard">
+  <div class="noteboard" :style="{width, height}">
     <router-view></router-view>
   </div>
 </template>
@@ -10,7 +10,13 @@ import { Component, Vue } from "vue-property-decorator";
 @Component({
   components: {}
 })
-export default class Noteboard extends Vue {}
+export default class Noteboard extends Vue {
+  /**
+   * "data"
+   */
+  height: string | null =  '800px';
+  width: string | null = '1024px';
+}
 </script>
 
 <style scoped>

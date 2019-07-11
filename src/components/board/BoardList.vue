@@ -1,6 +1,6 @@
 <template>
-  <div class="boardList">
-    <div class="card text-center">
+  <div class="boardList" style="height: 100%;">
+    <div class="card text-center" style="height: 100%;">
       <BoardItemNavigation :boards="boards"></BoardItemNavigation>
       <router-view></router-view>
     </div>
