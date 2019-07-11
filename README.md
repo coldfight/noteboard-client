@@ -27,3 +27,8 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+
+This is a good resource for bootstrap themes: https://bootswatch.com/sketchy/
+Help with transitions: https://markus.oberlehner.net/blog/vue-router-page-transitions/
