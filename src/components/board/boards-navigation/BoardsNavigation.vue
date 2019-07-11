@@ -1,5 +1,5 @@
 <template>
-  <div class="boardItemNavigation">
+  <div class="boardsNavigation">
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs">
         <li v-for="board in boards" :key="board.id" class="nav-item">
@@ -21,7 +21,7 @@ import Board from "@/entities/Board";
 @Component({
   components: {}
 })
-export default class BoardItemNavigation extends Vue {
+export default class BoardsNavigation extends Vue {
   /**
    * "props"
    */
