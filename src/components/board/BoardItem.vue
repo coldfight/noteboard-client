@@ -1,11 +1,15 @@
 <template>
-  <div class="boardItem">
-    <div v-if="board" class="card-body" :style="{ color: board.color }">
-      <h4 :id="`board_${board.id}`" class="card-title">{{ board.name }}</h4>
-      <p class="card-text">{{ board.description }}</p>
-    </div>
-    <div v-else class="card-body">
-      <!-- @todo: Add a small loading animation here. -->
+  <!-- :key is required to allow transitions to work with the same component: 
+  https://forum.vuejs.org/t/solved-vue-transitions-not-working/7614  -->
+  
+  <div class="boardItem" :key="$route.params.id" style="height: 100%;">
+    <transition name="fade">
+      <div v-if="board" class="card-body" :style="{height: '100%', backgroundColor: board.color }">
+        <h4 :id="`board_${board.id}`" class="card-title">{{ board.name }}</h4>
+        <p class="card-text">{{ board.description }}</p>
+      </div>
+    </transition>
+    <div v-if="!board" class="card-body" :style="{height: '100%' }">
       Loading...
     </div>
   </div>
@@ -17,7 +21,7 @@ import _ from "lodash";
 import Board from "@/entities/Board";
 
 // @todo: temporary until I implement API Platform to retrieve the boards
-import boards from "@/data/boards.ts";
+import boardsData from "@/data/boards.ts";
 
 @Component({
   components: {}
@@ -52,7 +56,7 @@ export default class BoardItem extends Vue {
     this.board = null;
     setTimeout(() => {
       const matchedBoards = _.filter(
-        boards,
+        boardsData,
         (board: Board) => board.id === parseInt(this.$route.params.id)
       );
 

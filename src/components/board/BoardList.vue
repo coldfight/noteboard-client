@@ -2,7 +2,9 @@
   <div class="boardList" style="height: 100%;">
     <div class="card text-center" style="height: 100%;">
       <BoardsNavigation :boards="boards"></BoardsNavigation>
-      <router-view></router-view>
+      <transition name="fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
     </div>
   </div>
 </template>
@@ -14,7 +16,7 @@ import BoardsNavigation from "@/components/board/boards-navigation/BoardsNavigat
 import Board from "@/entities/Board";
 
 // @todo: temporary until I implement API Platform to retrieve the boards
-import boards from "@/data/boards.ts";
+import boardsData from "@/data/boards.ts";
 
 @Component({
   components: { BoardItem, BoardsNavigation }
@@ -28,15 +30,15 @@ export default class BoardList extends Vue {
   /**
    * "lifecycle" hook functions
    */
-  async beforeMount() {
-    this.boards = await this.retrieveBoards();
+  beforeMount() {
+    this.retrieveBoards();
   }
 
   /**
    * "methods"
    */
   async retrieveBoards() {
-    return boards;
+    this.boards = boardsData;
   }
 }
 </script>
