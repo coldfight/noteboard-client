@@ -1,6 +1,10 @@
 <template>
   <div class="boardList">
-    <BoardItem v-for="board in boards" :key="board.id" :board="board"></BoardItem>
+    <!-- <BoardItem
+      v-for="board in boards"
+      :key="board.id"
+      :board="board"
+    ></BoardItem> -->
   </div>
 </template>
 
@@ -16,7 +20,6 @@ export default class BoardList extends Vue {
   boards: Array<Board> = [];
 
   beforeMount() {
-    console.log("BoardList beforeMount");
     this.boards = [
       {
         id: 1,
@@ -47,7 +50,6 @@ export default class BoardList extends Vue {
         privacy: "hidden"
       }
     ];
-    console.log(this.boards);
   }
 }
 </script>
