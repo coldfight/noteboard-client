@@ -1,10 +1,13 @@
 <template>
   <div class="boardItem">
-    <div v-if="board"  class="card-body" :style="{ color: board.color }">
+    <div v-if="board" class="card-body" :style="{ color: board.color }">
       <h4 :id="`board_${board.id}`" class="card-title">{{ board.name }}</h4>
       <p class="card-text">{{ board.description }}</p>
     </div>
-    <div v-else class="card-body"></div>
+    <div v-else class="card-body">
+      <!-- @todo: Add a small loading animation here. -->
+      Loading...
+    </div>
   </div>
 </template>
 
@@ -46,6 +49,7 @@ export default class BoardItem extends Vue {
    * "methods"
    */
   async retrieveBoard() {
+    this.board = null;
     setTimeout(() => {
       const matchedBoards = _.filter(
         boards,

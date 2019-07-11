@@ -1,5 +1,5 @@
 <template>
-  <div class="noteboard" :style="{width, height}">
+  <div class="noteboard" :style="{ width, height }">
     <router-view></router-view>
   </div>
 </template>
@@ -14,8 +14,8 @@ export default class Noteboard extends Vue {
   /**
    * "data"
    */
-  height: string | null =  '800px';
-  width: string | null = '1024px';
+  height: string | null = "800px";
+  width: string | null = "1024px";
 }
 </script>
 
