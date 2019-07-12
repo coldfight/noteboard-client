@@ -4,28 +4,28 @@ export default [
     id: 1,
     name: "Work",
     description: "This board is for work-related stuff",
-    color: "lightblue",
+    color: "#add8e6", // lightblue
     privacy: "hidden"
   },
   {
     id: 2,
     name: "Personal",
     description: "Personal projects and such",
-    color: "lightgreen",
+    color: "#90ee90", // lightgreen
     privacy: "hidden"
   },
   {
     id: 3,
     name: "Fun",
     description: "Some fun stuff belongs here... Yay!",
-    color: "lightyellow",
+    color: "#fafad2", // lightgoldenrodyellow
     privacy: "hidden"
   },
   {
     id: 4,
     name: "Important",
     description: "Important stuff goes here.",
-    color: "lightsalmon",
+    color: "#ffa07a", // lightsalmon
     privacy: "hidden"
   }
 ];

@@ -1,8 +1,7 @@
 <template>
   <div class="boardList" style="height: 100%;">
-    <div class="card text-center" style="height: 100%;">
+    <div class="card text-center" style="height: 100%; overflow: hidden;">
       <BoardsNavigation :boards="boards"></BoardsNavigation>
-
       <!-- :key is required to allow transitions to work with the same component: 
       https://forum.vuejs.org/t/solved-vue-transitions-not-working/7614-->
       <transition name="fade" mode="out-in">

@@ -3,7 +3,11 @@
     <div class="container">
       <div class="card-group">
         <div class="card">
-          <img class="card-img-top" src="https://placekitten.com/252/180" alt="Card image cap" />
+          <img
+            class="card-img-top"
+            src="https://placekitten.com/252/180"
+            alt="Card image cap"
+          />
           <div class="card-body">
             <h5 class="card-title">Step One</h5>
             <p class="card-text">Sign up or Sign in with your account.</p>
@@ -13,7 +17,11 @@
           </div>
         </div>
         <div class="card">
-          <img class="card-img-top" src="https://placekitten.com/252/180" alt="Card image cap" />
+          <img
+            class="card-img-top"
+            src="https://placekitten.com/252/180"
+            alt="Card image cap"
+          />
           <div class="card-body">
             <h5 class="card-title">Step Two</h5>
             <p class="card-text">Create a board.</p>
@@ -23,7 +31,11 @@
           </div>
         </div>
         <div class="card">
-          <img class="card-img-top" src="https://placekitten.com/252/180" alt="Card image cap" />
+          <img
+            class="card-img-top"
+            src="https://placekitten.com/252/180"
+            alt="Card image cap"
+          />
           <div class="card-body">
             <h5 class="card-title">Step Three title</h5>
             <p class="card-text">Create, arrange, customize, and save notes.</p>
@@ -36,10 +48,10 @@
 
       <div class="row">
         <div class="col-sm text-center">
-          <router-link :to="{name: '@boardsList'}">
-          Let's Get Started
+          <router-link :to="{ name: '@boardsList' }">
+            Let's Get Started
           </router-link>
-          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -54,5 +66,4 @@ import { Component, Vue } from "vue-property-decorator";
 export default class Home extends Vue {}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
