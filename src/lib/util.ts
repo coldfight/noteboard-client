@@ -4,13 +4,13 @@ interface ColorRGB {
   b: number;
 }
 
-export default abstract class Util {
+export default {
   /**
    * Convert a hexadecimal color value into a ColorRGB colour representation
    *
    * @param hex The six digit hex value for an HTML color. Can include/exclude the '#' symbol
    */
-  static convertHexColorToRgb(hex: string): ColorRGB | null {
+  convertHexColorToRgb(hex: string): ColorRGB | null {
     hex = hex.toUpperCase();
 
     // remove the leading #
@@ -31,13 +31,13 @@ export default abstract class Util {
       b: parseInt(hex.slice(4, 6), 16)
     };
     return color;
-  }
+  },
 
   /**
    * Converts ColorRGB back to hexadecimal color (includes the "#" symbol when returning)
    * @param color
    */
-  static convertRgbToHexColor(color: ColorRGB): string {
+  convertRgbToHexColor(color: ColorRGB): string {
     // Each color component needs to be padded with 0's if it's only one digit
     return (
       "#" +
@@ -45,7 +45,7 @@ export default abstract class Util {
       color.g.toString(16).padStart(2, "0") +
       color.b.toString(16).padStart(2, "0")
     );
-  }
+  },
 
   /**
    * Formula provided by
@@ -53,8 +53,8 @@ export default abstract class Util {
    *
    * @param hex
    */
-  static autoColorFromColor(hex: string): string {
-    const color = Util.convertHexColorToRgb(hex);
+  autoColorFromColor(hex: string): string {
+    const color = this.convertHexColorToRgb(hex);
     if (!color) {
       return "#FFFFFF";
     }
@@ -69,4 +69,4 @@ export default abstract class Util {
     // if colors are dark, use white font
     return "#FFFFFF";
   }
-}
+};

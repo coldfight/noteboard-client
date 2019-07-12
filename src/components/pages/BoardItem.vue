@@ -9,7 +9,8 @@
       </div>
     </transition>
     <div v-if="!board" class="card-body" :style="{ height: '100%' }">
-      Loading...
+      <span v-if="!loaded">Loading...</span>
+      <span v-else>Could not find Board</span>
     </div>
   </div>
 </template>
@@ -18,7 +19,8 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import _ from "lodash";
 import Board from "@/entities/Board";
-import util from "@/lib/util.ts";
+import Util from "@/lib/util";
+import BoardsService from "@/services/api-services/BoardsService";
 
 // @todo: temporary until I implement API Platform to retrieve the boards
 import boardsData from "@/data/boards.ts";
@@ -31,6 +33,7 @@ export default class BoardItem extends Vue {
    * "data"
    */
   board: Board | null = null;
+  loaded: boolean = false;
 
   /**
    * "watch"
@@ -58,7 +61,7 @@ export default class BoardItem extends Vue {
    */
   get autoColorFromBackgroundColor(): string {
     if (this.board) {
-      return util.autoColorFromColor(this.board.color);
+      return Util.autoColorFromColor(this.board.color);
     }
     return "#ffffff";
   }
@@ -75,14 +78,13 @@ export default class BoardItem extends Vue {
    */
   async retrieveBoard() {
     this.board = null;
-    setTimeout(() => {
-      const matchedBoards = _.filter(
-        boardsData,
-        (board: Board) => board.id === parseInt(this.$route.params.id)
-      );
-
-      this.board = matchedBoards.length > 0 ? matchedBoards[0] : null;
-    }, Math.random() * 1000);
+    this.loaded = false;
+    const response = await BoardsService.get(parseInt(this.$route.params.id));
+    if (response.data && !_.isEmpty(response.data)) {
+      // @todo: this weirdness because of firebase.. update once we use a real database
+      this.board = response.data[_.keys(response.data)[0]];
+    }
+    this.loaded = true;
   }
 }
 </script>
