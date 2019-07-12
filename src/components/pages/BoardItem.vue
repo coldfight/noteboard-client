@@ -2,7 +2,7 @@
   <div class="boardItem" style="height: 100%;">
     <!-- This transition is necessary because because it might not be loaded 
     in time for the transition to nicely display this element-->
-    <transition name="fade">
+    <transition name="fade" mode="out-in">
       <div
         v-if="board"
         class="card-body"

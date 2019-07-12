@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import BoardsNavigationItem from "@/components/board/boards-navigation/BoardsNavigationItem.vue";
+import BoardsNavigationItem from "@/components/boards-navigation/BoardsNavigationItem.vue";
 import Board from "@/entities/Board";
 
 @Component({

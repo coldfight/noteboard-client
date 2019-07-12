@@ -14,15 +14,14 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import BoardItem from "@/components/board/BoardItem.vue";
-import BoardsNavigation from "@/components/board/boards-navigation/BoardsNavigation.vue";
+import BoardsNavigation from "@/components/boards-navigation/BoardsNavigation.vue";
 import Board from "@/entities/Board";
 
 // @todo: temporary until I implement API Platform to retrieve the boards
 import boardsData from "@/data/boards.ts";
 
 @Component({
-  components: { BoardItem, BoardsNavigation }
+  components: { BoardsNavigation }
 })
 export default class BoardList extends Vue {
   /**
