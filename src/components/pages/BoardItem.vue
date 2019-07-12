@@ -9,7 +9,7 @@
       </div>
     </transition>
     <div v-if="!board" class="card-body" :style="{ height: '100%' }">
-      <span v-if="!loaded">Loading...</span>
+      <span v-if="!boardLoaded">Loading...</span>
       <span v-else>Could not find Board</span>
     </div>
   </div>
@@ -21,6 +21,7 @@ import _ from "lodash";
 import Board from "@/entities/Board";
 import Util from "@/lib/util";
 import BoardsService from "@/services/api-services/BoardsService";
+import NotesService from "@/services/api-services/NotesService";
 
 @Component({
   components: {}
@@ -30,7 +31,8 @@ export default class BoardItem extends Vue {
    * "data"
    */
   board: Board | null = null;
-  loaded: boolean = false;
+  boardLoaded: boolean = false;
+  notes: [] = []; // @todo: convert to Array<Note>
 
   /**
    * "watch"
@@ -75,13 +77,21 @@ export default class BoardItem extends Vue {
    */
   async retrieveBoard() {
     this.board = null;
-    this.loaded = false;
+    this.boardLoaded = false;
     const response = await BoardsService.get(parseInt(this.$route.params.id));
     if (response.data && !_.isEmpty(response.data)) {
       // @todo: this weirdness because of firebase.. update once we use a real database
       this.board = response.data[_.keys(response.data)[0]];
     }
-    this.loaded = true;
+    this.boardLoaded = true;
+  }
+
+  async retrieveNotes() {
+    if (!this.board) {
+      return;
+    }
+    this.notes = [];
+    const response = await NotesService.getAllForBoard(this.board.id)
   }
 }
 </script>
