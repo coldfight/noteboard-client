@@ -1,4 +1,4 @@
-interface RGB {
+interface ColorRGB {
   r: number;
   g: number;
   b: number;
@@ -6,11 +6,11 @@ interface RGB {
 
 export default abstract class Util {
   /**
-   * Convert a hexadecimal color value into a RGB colour representation
+   * Convert a hexadecimal color value into a ColorRGB colour representation
    *
    * @param hex The six digit hex value for an HTML color. Can include/exclude the '#' symbol
    */
-  static convertHexColorToRgb(hex: string): RGB | null {
+  static convertHexColorToRgb(hex: string): ColorRGB | null {
     hex = hex.toUpperCase();
 
     // remove the leading #
@@ -34,10 +34,10 @@ export default abstract class Util {
   }
 
   /**
-   * Converts RGB color back to hexadecimal color (includes the "#" symbol when returning)
+   * Converts ColorRGB back to hexadecimal color (includes the "#" symbol when returning)
    * @param color
    */
-  static convertRgbToHexColor(color: RGB): string {
+  static convertRgbToHexColor(color: ColorRGB): string {
     // Each color component needs to be padded with 0's if it's only one digit
     return (
       "#" +
