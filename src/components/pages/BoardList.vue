@@ -15,9 +15,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import BoardsNavigation from "@/components/boards-navigation/BoardsNavigation.vue";
 import Board from "@/entities/Board";
-
-// @todo: temporary until I implement API Platform to retrieve the boards
-import boardsData from "@/data/boards.ts";
+import BoardsService from "@/services/api-services/BoardsService";
 
 @Component({
   components: { BoardsNavigation }
@@ -39,7 +37,10 @@ export default class BoardList extends Vue {
    * "methods"
    */
   async retrieveBoards() {
-    this.boards = boardsData;
+    const response = await BoardsService.getAll();
+    if (response.data) {
+      this.boards = response.data;
+    }
   }
 }
 </script>

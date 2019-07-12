@@ -22,9 +22,6 @@ import Board from "@/entities/Board";
 import Util from "@/lib/util";
 import BoardsService from "@/services/api-services/BoardsService";
 
-// @todo: temporary until I implement API Platform to retrieve the boards
-import boardsData from "@/data/boards.ts";
-
 @Component({
   components: {}
 })
