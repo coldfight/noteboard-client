@@ -1,5 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/bootstrap4-neon-glow.min.css";
+import "./assets/css/open-iconic-bootstrap.min.css";
 import "./assets/css/site.css";
 import Vue from "vue";
 import Axios from "axios";
