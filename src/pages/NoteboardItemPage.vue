@@ -1,5 +1,5 @@
 <template>
-  <div class="boardItem" style="height: 100%;">
+  <div class="noteboardItemPage" style="height: 100%;">
     <!-- This transition is necessary because because it might not be loaded 
     in time for the transition to nicely display this element-->
     <transition name="fade" mode="out-in">
@@ -26,7 +26,7 @@ import NotesService from "@/services/api-services/NotesService";
 @Component({
   components: {}
 })
-export default class BoardItem extends Vue {
+export default class NoteboardItemPage extends Vue {
   /**
    * "data"
    */
@@ -91,7 +91,7 @@ export default class BoardItem extends Vue {
       return;
     }
     this.notes = [];
-    const response = await NotesService.getAllForBoard(this.board.id)
+    const response = await NotesService.getAllForBoard(this.board.id);
   }
 }
 </script>

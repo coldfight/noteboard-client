@@ -1,5 +1,5 @@
 <template>
-  <div class="boardList" style="height: 100%;">
+  <div class="noteboardsPage" :style="{ width, height }">
     <div class="card text-center" style="height: 100%; overflow: hidden;">
       <BoardsNavigation :boards="boards"></BoardsNavigation>
       <!-- :key is required to allow transitions to work with the same component: 
@@ -20,11 +20,13 @@ import BoardsService from "@/services/api-services/BoardsService";
 @Component({
   components: { BoardsNavigation }
 })
-export default class BoardList extends Vue {
+export default class NoteboardsPage extends Vue {
   /**
    * "data"
    */
   boards: Array<Board> = [];
+  height: string | null = "800px";
+  width: string | null = "1024px";
 
   /**
    * "lifecycle" hook functions
@@ -44,3 +46,9 @@ export default class BoardList extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.noteboardsPage {
+  padding: 50px 10px;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-dark bg-primary">
-    <router-link :to="{ name: '@boardsList' }" class="navbar-brand"
+    <router-link :to="{ name: '@noteboardsPage' }" class="navbar-brand"
       >Noteboard</router-link
     >
     <form @submit.prevent="search" class="form-inline">
