@@ -7,7 +7,7 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import Note from "@/entities/Note";
-import NoteListItem from "@/components/notes/NoteListItem.vue";
+import NoteListItem from "@/components/notes/note-list-item/NoteListItem.vue";
 
 @Component({
   components: { NoteListItem }

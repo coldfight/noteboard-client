@@ -8,8 +8,8 @@
       </div>
     </transition>
     <div v-if="!board" class="card-body" :style="{ height: '100%' }">
-      <span v-if="!boardLoaded">Loading...</span>
-      <span v-else>Could not find Board</span>
+      <!-- <span v-if="!boardLoaded">Loading...</span> -->
+      <!-- <span v-else>Could not find Board</span> -->
     </div>
   </div>
 </template>

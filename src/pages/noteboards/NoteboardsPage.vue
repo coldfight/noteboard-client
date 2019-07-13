@@ -31,8 +31,15 @@ export default class NoteboardsPage extends Vue {
   /**
    * "lifecycle" hook functions
    */
-  beforeMount() {
-    this.retrieveBoards();
+  async beforeMount() {
+    await this.retrieveBoards();
+    if (this.boards && this.boards.length > 0) {
+      // Redirect to the first board on the list.
+      this.$router.push({
+        name: "@noteboardsItemPage",
+        params: { id: this.boards[0].id.toString() }
+      });
+    }
   }
 
   /**
