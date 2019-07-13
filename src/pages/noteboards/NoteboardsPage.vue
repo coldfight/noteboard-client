@@ -4,9 +4,9 @@
       <BoardsNavigation :boards="boards" />
       <!-- :key is required to allow transitions to work with the same component: 
       https://forum.vuejs.org/t/solved-vue-transitions-not-working/7614-->
-      <transition name="fade" mode="out-in">
+      <FadeTransition>
         <router-view :key="$route.params.id"></router-view>
-      </transition>
+      </FadeTransition>
     </div>
   </div>
 </template>
@@ -14,11 +14,12 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import BoardsNavigation from "@/components/boards-navigation/BoardsNavigation.vue";
+import FadeTransition from "@/components/transitions/FadeTransition.vue";
 import Board from "@/entities/Board";
 import BoardsService from "@/services/api-services/BoardsService";
 
 @Component({
-  components: { BoardsNavigation }
+  components: { BoardsNavigation, FadeTransition }
 })
 export default class NoteboardsPage extends Vue {
   /**

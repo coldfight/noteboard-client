@@ -2,11 +2,11 @@
   <div class="noteboardsItemPage" style="height: 100%;">
     <!-- This transition is necessary because because it might not be loaded 
     in time for the transition to nicely display this element-->
-    <transition name="fade" mode="out-in">
+    <FadeTransition>
       <div v-if="board" class="card-body" :style="boardItemCardStyles">
         <NoteList :notes="notes" />
       </div>
-    </transition>
+    </FadeTransition>
     <div v-if="!board" class="card-body" :style="{ height: '100%' }">
       <!-- <span v-if="!boardLoaded">Loading...</span> -->
       <!-- <span v-else>Could not find Board</span> -->
@@ -21,11 +21,12 @@ import Board from "@/entities/Board";
 import Note from "@/entities/Note";
 import Util from "@/lib/util";
 import NoteList from "@/components/notes/NoteList.vue";
+import FadeTransition from "@/components/transitions/FadeTransition.vue";
 import BoardsService from "@/services/api-services/BoardsService";
 import NotesService from "@/services/api-services/NotesService";
 
 @Component({
-  components: { NoteList }
+  components: { NoteList, FadeTransition }
 })
 export default class NoteboardsItemPage extends Vue {
   /**

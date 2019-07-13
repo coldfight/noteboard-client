@@ -1,26 +1,3 @@
-/**
- * Vuejs transitions classes
- */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.35s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
-
-.accordion-enter-active,
-.accordion-leave-active {
-  transition: height 0.35s;
-  transition: padding 0.35s;
-  overflow: hidden;
-}
-.accordion-enter, .accordion-leave-to {
-  height: 0;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
 .noteList {
   position: relative;
 }

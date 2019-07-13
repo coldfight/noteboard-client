@@ -1,12 +1,9 @@
 <template>
-  <div :class="['noteListItem card', textColorClass]" ref="item" :style="cardStyles">
+  <div :class="['noteListItem card mb-3', textColorClass]" ref="item" :style="cardStyles">
     <NoteListItemToolbar @toolbar-clicked="toggleBody" />
-    <transition
-      name="accordion"
-      mode="out-in"
-    >
+    <AccordionTransition>
       <NoteListItemBody v-if="showBody" :note="note" />
-    </transition>
+    </AccordionTransition>
   </div>
 </template>
 
@@ -14,11 +11,12 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import NoteListItemToolbar from "@/components/notes/note-list-item/NoteListItemToolbar.vue";
 import NoteListItemBody from "@/components/notes/note-list-item/NoteListItemBody.vue";
+import AccordionTransition from "@/components/transitions/AccordionTransition.vue";
 import Note from "@/entities/Note";
 import Util from "@/lib/util";
 
 @Component({
-  components: { NoteListItemToolbar, NoteListItemBody }
+  components: { NoteListItemToolbar, NoteListItemBody, AccordionTransition }
 })
 export default class NoteListItem extends Vue {
   /**
