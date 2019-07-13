@@ -7,9 +7,9 @@
         <NoteList :notes="notes" />
       </div>
     </FadeTransition>
-    <div v-if="!board" class="card-body" :style="{ height: '100%' }">
+    <div v-if="!board && boardLoaded" class="card-body" :style="{ height: '100%' }">
       <!-- <span v-if="!boardLoaded">Loading...</span> -->
-      <!-- <span v-else>Could not find Board</span> -->
+      <span>Could not find Board</span>
     </div>
   </div>
 </template>

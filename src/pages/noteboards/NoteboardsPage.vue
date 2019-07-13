@@ -1,7 +1,7 @@
 <template>
   <div class="noteboardsPage" :style="{ width, height }">
     <div class="card text-center" style="height: 100%; overflow: hidden;">
-      <BoardsNavigation :boards="boards" />
+      <BoardsNavigation :boards="boards" @create-new-board="createNewBoard" />
       <!-- :key is required to allow transitions to work with the same component: 
       https://forum.vuejs.org/t/solved-vue-transitions-not-working/7614-->
       <FadeTransition>
@@ -34,8 +34,12 @@ export default class NoteboardsPage extends Vue {
    */
   async beforeMount() {
     await this.retrieveBoards();
-    if (this.boards && this.boards.length > 0) {
-      // Redirect to the first board on the list.
+    if (
+      this.boards &&
+      this.boards.length > 0 &&
+      this.$route.name === "@noteboardsPage"
+    ) {
+      // Redirect to the first board on the list if we're on noteboardsPage route
       this.$router.push({
         name: "@noteboardsItemPage",
         params: { id: this.boards[0].id.toString() }
@@ -51,6 +55,9 @@ export default class NoteboardsPage extends Vue {
     if (response.data) {
       this.boards = response.data;
     }
+  }
+  
+  createNewBoard() {
   }
 }
 </script>

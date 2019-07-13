@@ -1,9 +1,9 @@
 <template>
   <div @click.prevent="toolbarClicked" class="toolbar noselect">
-    <a href="#" @click.prevent="editNote" class="text-light" title="Edit Note">
+    <a href="#" @click.prevent.stop="editNote" class="text-light" title="Edit Note">
       <span class="oi oi-pencil" aria-hidden="true"></span>
     </a>
-    <a href="#" @click.prevent="deleteNote" class="text-light" title="Delete Note">
+    <a href="#" @click.prevent.stop="deleteNote" class="text-light" title="Delete Note">
       <span class="oi oi-trash" aria-hidden="true"></span>
     </a>
   </div>
@@ -19,12 +19,15 @@ export default class NoteListItemToolbar extends Vue {
   /**
    * "methods"
    */
-  editNote() {}
-  deleteNote() {
+  editNote(e: any) {
+    this.$emit('edit-note')
+  }
+  deleteNote(e: any) {
     confirm("Are you sure you want to delete this note?");
+    this.$emit('delete-note')
   }
   toolbarClicked(e: any) {
-    this.$emit('toolbar-clicked');
+    this.$emit("toolbar-clicked");
   }
 }
 </script>
@@ -32,20 +35,16 @@ export default class NoteListItemToolbar extends Vue {
 <style scoped>
 .toolbar {
   background-color: black;
-  cursor: grab;
   text-align: right;
+  cursor: grab;
 }
 .toolbar a {
   font-size: 0.85em;
-  vertical-align: top;
   margin: 0 5px 0 2px;
-  opacity: 0.4;
+  opacity: 0.24;
 }
-.toolbar:hover a {
-  font-size: 0.85em;
-  vertical-align: top;
-  margin: 0 5px 0 2px;
-  opacity: 1;
+.toolbar a:hover {
+  opacity: 0.65;
 }
 .toolbar.grabbed {
   cursor: grabbing;
