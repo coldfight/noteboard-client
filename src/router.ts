@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 import HomePage from "./pages/HomePage.vue";
-import NoteboardsPage from "./pages/NoteboardsPage.vue";
-import NoteboardItemPage from "./pages/NoteboardItemPage.vue";
+import NoteboardsPage from "./pages/noteboards/NoteboardsPage.vue";
+import NoteboardsItemPage from "./pages/noteboards/NoteboardsItemPage.vue";
 import EmptyRouterView from "./pages/EmptyRouterView.vue";
 
 Vue.use(Router);
@@ -35,8 +35,8 @@ export default new Router({
           children: [
             {
               path: ":id",
-              name: "@noteboardItemPage",
-              component: NoteboardItemPage
+              name: "@noteboardsItemPage",
+              component: NoteboardsItemPage
             }
           ]
         }

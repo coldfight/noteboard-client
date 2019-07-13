@@ -1,7 +1,7 @@
 <template>
   <div class="noteboardsPage" :style="{ width, height }">
     <div class="card text-center" style="height: 100%; overflow: hidden;">
-      <BoardsNavigation :boards="boards"></BoardsNavigation>
+      <BoardsNavigation :boards="boards" />
       <!-- :key is required to allow transitions to work with the same component: 
       https://forum.vuejs.org/t/solved-vue-transitions-not-working/7614-->
       <transition name="fade" mode="out-in">
@@ -25,8 +25,8 @@ export default class NoteboardsPage extends Vue {
    * "data"
    */
   boards: Array<Board> = [];
-  height: string | null = "800px";
-  width: string | null = "1024px";
+  width: string | null = "100%";
+  height: string | null = "94vh";
 
   /**
    * "lifecycle" hook functions
@@ -49,6 +49,6 @@ export default class NoteboardsPage extends Vue {
 
 <style scoped>
 .noteboardsPage {
-  padding: 50px 10px;
+  padding: 20px;
 }
 </style>

@@ -2,7 +2,8 @@
   <li class="nav-item">
     <router-link
       class="nav-link"
-      :to="{ name: '@noteboardItemPage', params: { id: board.id } }"
+      :to="{ name: '@noteboardsItemPage', params: { id: board.id } }"
+      :title="board.description"
       >{{ board.name }}</router-link
     >
   </li>

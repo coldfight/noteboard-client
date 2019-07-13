@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <AppHeader></AppHeader>
+    <AppHeader />
     <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Header from "@/components/common/Header.vue";
+import AppHeader from "@/components/common/AppHeader.vue";
 
 @Component({
   components: {
-    AppHeader: Header
+    AppHeader
   }
 })
 export default class App extends Vue {}

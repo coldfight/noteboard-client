@@ -1,11 +1,10 @@
 <template>
-  <div class="noteboardItemPage" style="height: 100%;">
+  <div class="noteboardsItemPage" style="height: 100%;">
     <!-- This transition is necessary because because it might not be loaded 
     in time for the transition to nicely display this element-->
     <transition name="fade" mode="out-in">
       <div v-if="board" class="card-body" :style="boardItemCardStyles">
-        <h4 :id="`board_${board.id}`" class="card-title">{{ board.name }}</h4>
-        <p class="card-text">{{ board.description }}</p>
+        <NoteList :notes="notes" />
       </div>
     </transition>
     <div v-if="!board" class="card-body" :style="{ height: '100%' }">
@@ -19,20 +18,22 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import _ from "lodash";
 import Board from "@/entities/Board";
+import Note from "@/entities/Note";
 import Util from "@/lib/util";
+import NoteList from "@/components/notes/NoteList.vue";
 import BoardsService from "@/services/api-services/BoardsService";
 import NotesService from "@/services/api-services/NotesService";
 
 @Component({
-  components: {}
+  components: {NoteList}
 })
-export default class NoteboardItemPage extends Vue {
+export default class NoteboardsItemPage extends Vue {
   /**
    * "data"
    */
   board: Board | null = null;
   boardLoaded: boolean = false;
-  notes: [] = []; // @todo: convert to Array<Note>
+  notes: Array<Note> = [];
 
   /**
    * "watch"
@@ -41,7 +42,7 @@ export default class NoteboardItemPage extends Vue {
   // noteboard we're going to have to pull the new data for it.
   @Watch("$route")
   onRouteChanged(value: any, oldValue: any) {
-    this.retrieveBoard();
+    this.retrieveData();
   }
 
   get boardItemCardStyles(): object {
@@ -49,7 +50,7 @@ export default class NoteboardItemPage extends Vue {
 
     if (this.board) {
       styles.backgroundColor = this.board.color;
-      styles.color = this.autoColorFromBackgroundColor;
+      // styles.color = this.autoColorFromBackgroundColor;
     }
 
     return styles;
@@ -69,12 +70,17 @@ export default class NoteboardItemPage extends Vue {
    * "lifecycle" hook methods
    */
   beforeMount() {
-    this.retrieveBoard();
+    this.retrieveData();
   }
 
   /**
    * "methods"
    */
+  async retrieveData() {
+    await this.retrieveBoard();
+    await this.retrieveNotes();
+  }
+
   async retrieveBoard() {
     this.board = null;
     this.boardLoaded = false;
@@ -87,11 +93,18 @@ export default class NoteboardItemPage extends Vue {
   }
 
   async retrieveNotes() {
+    this.notes = [];
     if (!this.board) {
       return;
     }
-    this.notes = [];
     const response = await NotesService.getAllForBoard(this.board.id);
+    if (response.data && !_.isEmpty(response.data)) {
+      // @todo: this weirdness because of firebase.. update once we use a real database
+      const notes: Array<Note> = [];
+      _.each(response.data, item => notes.push(item));
+      this.notes = notes;
+    }
   }
 }
 </script>
+

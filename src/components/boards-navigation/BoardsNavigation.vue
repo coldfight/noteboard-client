@@ -2,11 +2,7 @@
   <div class="boardsNavigation">
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs">
-        <BoardsNavigationItem
-          v-for="board in boards"
-          :key="board.id"
-          :board="board"
-        ></BoardsNavigationItem>
+        <BoardsNavigationItem v-for="board in boards" :key="board.id" :board="board" />
       </ul>
     </div>
   </div>
@@ -24,6 +20,6 @@ export default class BoardsNavigation extends Vue {
   /**
    * "props"
    */
-  @Prop({ default: null }) boards!: Array<Board>;
+  @Prop({ default: () => [] }) boards!: Array<Board>;
 }
 </script>
