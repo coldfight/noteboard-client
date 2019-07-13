@@ -25,7 +25,7 @@ import BoardsService from "@/services/api-services/BoardsService";
 import NotesService from "@/services/api-services/NotesService";
 
 @Component({
-  components: {NoteList}
+  components: { NoteList }
 })
 export default class NoteboardsItemPage extends Vue {
   /**
@@ -107,4 +107,3 @@ export default class NoteboardsItemPage extends Vue {
   }
 }
 </script>
-

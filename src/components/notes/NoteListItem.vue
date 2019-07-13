@@ -1,9 +1,27 @@
 <template>
   <div
-    :class="['noteListItem card mb-3', textColorClass]"
+    :class="['noteListItem card', textColorClass]"
     ref="item"
     :style="cardStyles"
   >
+    <div class="toolbar noselect">
+      <a
+        href="#"
+        @click.prevent="editNote"
+        class="text-light"
+        title="Edit Note"
+      >
+        <span class="oi oi-pencil" aria-hidden="true"></span>
+      </a>
+      <a
+        href="#"
+        @click.prevent="deleteNote"
+        class="text-light"
+        title="Delete Note"
+      >
+        <span class="oi oi-trash" aria-hidden="true"></span>
+      </a>
+    </div>
     <div class="card-body">
       <blockquote class="card-blockquote">
         <p>{{ note.content }}</p>
@@ -31,7 +49,7 @@ export default class NoteListItem extends Vue {
    */
   get cardStyles(): object {
     return {
-      backgroundColor: this.note.color,
+      backgroundColor: this.note.color
     };
   }
 
@@ -42,8 +60,20 @@ export default class NoteListItem extends Vue {
     return "text-light";
   }
 
+  /**
+   * "methods"
+   */
+  editNote() {}
+  deleteNote() {
+    confirm("Are you sure you want to delete this note?");
+  }
+
+  /**
+   * "lifecycle" methods
+   */
   mounted() {
-    console.log(this.$refs.item);
+    // @todo: arrange the item based on the note's position
+    // console.log(this.$refs.item);
   }
 }
 </script>
@@ -54,14 +84,28 @@ export default class NoteListItem extends Vue {
   text-align: left;
   /* position: absolute; */
 }
-</style>
-
-<style scoped>
+.toolbar {
+  background-color: black;
+  cursor: grab;
+  text-align: right;
+}
+.toolbar a {
+  font-size: 0.85em;
+  vertical-align: top;
+  margin: 0 5px 0 2px;
+  opacity: 0.4;
+}
+.toolbar:hover a {
+  font-size: 0.85em;
+  vertical-align: top;
+  margin: 0 5px 0 2px;
+  opacity: 1;
+}
+.toolbar.grabbed {
+  cursor: grabbing;
+}
 .card-blockquote p,
 .card-blockquote {
   margin: 0;
-}
-.noteListItem {
-  /* position: absolute; */
 }
 </style>

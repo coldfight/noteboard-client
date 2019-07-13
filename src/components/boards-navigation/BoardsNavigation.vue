@@ -2,7 +2,11 @@
   <div class="boardsNavigation">
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs">
-        <BoardsNavigationItem v-for="board in boards" :key="board.id" :board="board" />
+        <BoardsNavigationItem
+          v-for="board in boards"
+          :key="board.id"
+          :board="board"
+        />
       </ul>
     </div>
   </div>
