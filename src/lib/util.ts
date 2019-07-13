@@ -54,19 +54,25 @@ export default {
    * @param hex
    */
   autoColorFromColor(hex: string): string {
-    const color = this.convertHexColorToRgb(hex);
-    if (!color) {
-      return "#FFFFFF";
-    }
-
-    let luminance: number =
-      (0.299 * color.r + 0.587 * color.g + 0.114 * color.b) / 255;
-
-    if (luminance > 0.5) {
+    if (this.useDarkColor(hex)) {
       // if colors are bright, use black font
       return "#000000";
     }
     // if colors are dark, use white font
     return "#FFFFFF";
+  },
+
+  // if colors are bright, use black font
+  useDarkColor(hex: string): boolean {
+    const color = this.convertHexColorToRgb(hex);
+    if (!color) {
+      return false;
+    }
+
+    let luminance: number =
+      (0.299 * color.r + 0.587 * color.g + 0.114 * color.b) / 255;
+
+    // if colors are bright, use black font
+    return luminance > 0.5;
   }
 };

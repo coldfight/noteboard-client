@@ -45,20 +45,20 @@ export default class NoteboardsItemPage extends Vue {
     this.retrieveData();
   }
 
+  /**
+   * "computed"
+   */
   get boardItemCardStyles(): object {
     const styles = { height: "100%", backgroundColor: "", color: "" };
 
     if (this.board) {
-      styles.backgroundColor = this.board.color;
+      // styles.backgroundColor = this.board.color;
       // styles.color = this.autoColorFromBackgroundColor;
     }
 
     return styles;
   }
 
-  /**
-   * "computed"
-   */
   get autoColorFromBackgroundColor(): string {
     if (this.board) {
       return Util.autoColorFromColor(this.board.color);
