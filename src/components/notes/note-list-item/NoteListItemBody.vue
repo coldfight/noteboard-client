@@ -6,19 +6,16 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
-import Note from "@/entities/Note";
-
-@Component({
-  components: { }
-})
-export default class NoteListItemBody extends Vue {
-  /**
-   * "props"
-   */
-  @Prop({ required: true }) note!: Note;
-}
+<script>
+export default {
+  name: "NoteListItemBody",
+  props: {
+    note: {
+      type: Object,
+      required: true
+    }
+  }
+};
 </script>
 
 <style scoped>

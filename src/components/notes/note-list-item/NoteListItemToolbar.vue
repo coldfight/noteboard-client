@@ -1,35 +1,40 @@
 <template>
   <div @click.prevent="toolbarClicked" class="toolbar noselect">
-    <a href="#" @click.prevent.stop="editNote" class="text-light" title="Edit Note">
+    <a
+      href="#"
+      @click.prevent.stop="editNote"
+      class="text-light"
+      title="Edit Note"
+    >
       <span class="oi oi-pencil" aria-hidden="true"></span>
     </a>
-    <a href="#" @click.prevent.stop="deleteNote" class="text-light" title="Delete Note">
+    <a
+      href="#"
+      @click.prevent.stop="deleteNote"
+      class="text-light"
+      title="Delete Note"
+    >
       <span class="oi oi-trash" aria-hidden="true"></span>
     </a>
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
-
-@Component({
-  components: {}
-})
-export default class NoteListItemToolbar extends Vue {
-  /**
-   * "methods"
-   */
-  editNote(e: any) {
-    this.$emit('edit-note')
+<script>
+export default {
+  name: "NoteListItemToolbar",
+  methods: {
+    editNote() {
+      this.$emit("edit-note");
+    },
+    deleteNote() {
+      confirm("Are you sure you want to delete this note?");
+      this.$emit("delete-note");
+    },
+    toolbarClicked() {
+      this.$emit("toolbar-clicked");
+    }
   }
-  deleteNote(e: any) {
-    confirm("Are you sure you want to delete this note?");
-    this.$emit('delete-note')
-  }
-  toolbarClicked(e: any) {
-    this.$emit("toolbar-clicked");
-  }
-}
+};
 </script>
 
 <style scoped>

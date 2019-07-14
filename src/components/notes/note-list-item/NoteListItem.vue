@@ -1,5 +1,9 @@
 <template>
-  <div :class="['noteListItem card mb-3', textColorClass]" ref="item" :style="cardStyles">
+  <div
+    :class="['noteListItem card mb-3', textColorClass]"
+    ref="item"
+    :style="cardStyles"
+  >
     <NoteListItemToolbar @toolbar-clicked="toggleBody" />
     <AccordionTransition>
       <NoteListItemBody v-if="showBody" :note="note" />
@@ -7,64 +11,54 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+<script>
 import NoteListItemToolbar from "@/components/notes/note-list-item/NoteListItemToolbar.vue";
 import NoteListItemBody from "@/components/notes/note-list-item/NoteListItemBody.vue";
 import AccordionTransition from "@/components/transitions/AccordionTransition.vue";
-import Note from "@/entities/Note";
 import Util from "@/lib/util";
 
-@Component({
-  components: { NoteListItemToolbar, NoteListItemBody, AccordionTransition }
-})
-export default class NoteListItem extends Vue {
-  /**
-   * "props"
-   */
-  @Prop({ required: true }) note!: Note;
-
-  /**
-   * "data"
-   */
-  showBody: boolean = true;
-
-  /**
-   * "computed"
-   */
-  get cardStyles(): object {
-    return {
-      backgroundColor: this.note.color
-    };
-  }
-
-  get textColorClass(): string {
-    if (Util.useDarkColor(this.note.color)) {
-      return "text-dark";
+export default {
+  name: "NoteListItem",
+  components: { NoteListItemToolbar, NoteListItemBody, AccordionTransition },
+  props: {
+    note: {
+      type: Object,
+      required: true
     }
-    return "text-light";
-  }
-
-  /**
-   * "methods"
-   */
-  editNote() {}
-  deleteNote() {}
-  toolbarClicked() {
-    console.log("I Clicked the toolbar, so I should collapse the body.");
-  }
-  toggleBody() {
-    this.showBody = !this.showBody;
-  }
-
-  /**
-   * "lifecycle" methods
-   */
+  },
+  data() {
+    return {
+      showBody: true
+    };
+  },
+  computed: {
+    cardStyles() {
+      return {
+        backgroundColor: this.note.color
+      };
+    },
+    textColorClass() {
+      if (Util.useDarkColor(this.note.color)) {
+        return "text-dark";
+      }
+      return "text-light";
+    }
+  },
+  methods: {
+    editNote() {},
+    deleteNote() {},
+    toolbarClicked() {
+      console.log("I Clicked the toolbar, so I should collapse the body.");
+    },
+    toggleBody() {
+      this.showBody = !this.showBody;
+    }
+  },
   mounted() {
     // @todo: arrange the item based on the note's position
     // console.log(this.$refs.item);
   }
-}
+};
 </script>
 
 <style scoped>

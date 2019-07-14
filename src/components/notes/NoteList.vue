@@ -4,18 +4,19 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
-import Note from "@/entities/Note";
+<script>
 import NoteListItem from "@/components/notes/note-list-item/NoteListItem.vue";
 
-@Component({
-  components: { NoteListItem }
-})
-export default class NoteList extends Vue {
-  /**
-   * "props"
-   */
-  @Prop({ default: () => [] }) notes!: Array<Note>;
-}
+export default {
+  name: "NoteList",
+  components: {
+    NoteListItem
+  },
+  props: {
+    notes: {
+      type: Array,
+      default: () => []
+    }
+  }
+};
 </script>

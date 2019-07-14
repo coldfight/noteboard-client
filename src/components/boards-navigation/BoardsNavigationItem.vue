@@ -9,17 +9,14 @@
   </li>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
-import Board from "@/entities/Board";
-
-@Component({
-  components: {}
-})
-export default class BoardsNavigationItem extends Vue {
-  /**
-   * "props"
-   */
-  @Prop({ default: null }) board!: Board;
-}
+<script>
+export default {
+  name: "BoardsNavigationItem",
+  props: {
+    board: {
+      type: Object,
+      required: true
+    }
+  }
+};
 </script>

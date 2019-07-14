@@ -1,16 +1,10 @@
-interface ColorRGB {
-  r: number;
-  g: number;
-  b: number;
-}
-
 export default {
   /**
    * Convert a hexadecimal color value into a ColorRGB colour representation
    *
    * @param hex The six digit hex value for an HTML color. Can include/exclude the '#' symbol
    */
-  convertHexColorToRgb(hex: string): ColorRGB | null {
+  convertHexColorToRgb(hex) {
     hex = hex.toUpperCase();
 
     // remove the leading #
@@ -37,7 +31,7 @@ export default {
    * Converts ColorRGB back to hexadecimal color (includes the "#" symbol when returning)
    * @param color
    */
-  convertRgbToHexColor(color: ColorRGB): string {
+  convertRgbToHexColor(color) {
     // Each color component needs to be padded with 0's if it's only one digit
     return (
       "#" +
@@ -53,7 +47,7 @@ export default {
    *
    * @param hex
    */
-  autoColorFromColor(hex: string): string {
+  autoColorFromColor(hex) {
     if (this.useDarkColor(hex)) {
       // if colors are bright, use black font
       return "#000000";
@@ -63,14 +57,13 @@ export default {
   },
 
   // if colors are bright, use black font
-  useDarkColor(hex: string): boolean {
+  useDarkColor(hex) {
     const color = this.convertHexColorToRgb(hex);
     if (!color) {
       return false;
     }
 
-    let luminance: number =
-      (0.299 * color.r + 0.587 * color.g + 0.114 * color.b) / 255;
+    let luminance = (0.299 * color.r + 0.587 * color.g + 0.114 * color.b) / 255;
 
     // if colors are bright, use black font
     return luminance > 0.5;

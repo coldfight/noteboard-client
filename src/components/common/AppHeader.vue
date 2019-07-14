@@ -18,17 +18,20 @@
   </nav>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-
-@Component
-export default class AppHeader extends Vue {
-  searchTerm: string = "";
-
-  search(event: any) {
-    // @todo: YOu want to pass this.searchTerm  to something... not sure what yet.
-    // @todo: We will search All boards and notes
-    console.log("You searched for: ", this.searchTerm);
+<script>
+export default {
+  name: "AppHeader",
+  data() {
+    return {
+      searchTerm: ""
+    };
+  },
+  methods: {
+    search() {
+      // @todo: YOu want to pass this.searchTerm  to something... not sure what yet.
+      // @todo: We will search All boards and notes
+      console.log("You searched for: ", this.searchTerm);
+    }
   }
-}
+};
 </script>

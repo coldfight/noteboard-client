@@ -6,10 +6,9 @@ import Vue from "vue";
 import Axios from "axios";
 import App from "./App.vue";
 import router from "./router";
-import store from "./store/index";
+import store from "./store";
 
 Vue.config.productionTip = false;
-
 Axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 
 new Vue({

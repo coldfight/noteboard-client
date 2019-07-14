@@ -11,27 +11,33 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+<script>
 import BoardsNavigation from "@/components/boards-navigation/BoardsNavigation.vue";
 import FadeTransition from "@/components/transitions/FadeTransition.vue";
-import Board from "@/entities/Board";
 import BoardsService from "@/services/api-services/BoardsService";
 
-@Component({
-  components: { BoardsNavigation, FadeTransition }
-})
-export default class NoteboardsPage extends Vue {
-  /**
-   * "data"
-   */
-  boards: Array<Board> = [];
-  width: string | null = "100%";
-  height: string | null = "94vh";
-
-  /**
-   * "lifecycle" hook functions
-   */
+export default {
+  name: "NoteboardsPage",
+  components: {
+    FadeTransition,
+    BoardsNavigation
+  },
+  data() {
+    return {
+      boards: [],
+      width: "100%",
+      height: "94vh"
+    };
+  },
+  methods: {
+    async retrieveBoards() {
+      const response = await BoardsService.getAll();
+      if (response.data) {
+        this.boards = response.data;
+      }
+    },
+    createNewBoard() {}
+  },
   async beforeMount() {
     await this.retrieveBoards();
     if (
@@ -46,20 +52,7 @@ export default class NoteboardsPage extends Vue {
       });
     }
   }
-
-  /**
-   * "methods"
-   */
-  async retrieveBoards() {
-    const response = await BoardsService.getAll();
-    if (response.data) {
-      this.boards = response.data;
-    }
-  }
-  
-  createNewBoard() {
-  }
-}
+};
 </script>
 
 <style scoped>

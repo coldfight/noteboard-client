@@ -48,22 +48,17 @@
 
       <div class="row">
         <div class="col-sm text-center">
-          <router-link :to="{ name: '@noteboardsPage' }">
-            Let's Get Started
-          </router-link>
+          <router-link :to="{ name: '@noteboardsPage' }"
+            >Let's Get Started</router-link
+          >
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-
-@Component({
-  components: {}
-})
-export default class HomePage extends Vue {}
+<script>
+export default {
+  name: "HomePage"
+};
 </script>
-
-<style scoped></style>

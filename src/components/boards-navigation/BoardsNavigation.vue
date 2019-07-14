@@ -2,7 +2,11 @@
   <div class="boardsNavigation">
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs">
-        <BoardsNavigationItem v-for="board in boards" :key="board.id" :board="board" />
+        <BoardsNavigationItem
+          v-for="board in boards"
+          :key="board.id"
+          :board="board"
+        />
         <li class="nav-item">
           <a
             href="#"
@@ -18,25 +22,24 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+<script>
 import BoardsNavigationItem from "@/components/boards-navigation/BoardsNavigationItem.vue";
-import Board from "@/entities/Board";
 
-@Component({
-  components: { BoardsNavigationItem }
-})
-export default class BoardsNavigation extends Vue {
-  /**
-   * "props"
-   */
-  @Prop({ default: () => [] }) boards!: Array<Board>;
-
-  /**
-   * "methods"
-   */
-  createNewBoard(e: any) {
-    this.$emit("create-new-board");
+export default {
+  name: "BoardsNavigation",
+  components: {
+    BoardsNavigationItem
+  },
+  props: {
+    boards: {
+      type: Array,
+      default: () => []
+    }
+  },
+  methods: {
+    createNewBoard() {
+      this.$emit("create-new-board");
+    }
   }
-}
+};
 </script>

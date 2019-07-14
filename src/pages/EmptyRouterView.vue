@@ -1,5 +1,15 @@
 <template>
-  <transition name="fade" mode="out-in">
+  <AccordionTransition>
     <router-view></router-view>
-  </transition>
+  </AccordionTransition>
 </template>
+
+<script>
+import AccordionTransition from "@/components/transitions/AccordionTransition.vue";
+
+export default {
+  components: {
+    AccordionTransition
+  }
+};
+</script>

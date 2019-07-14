@@ -4,13 +4,10 @@
   </transition>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
-
-@Component({
-  components: {}
-})
-export default class AccordionTransition extends Vue {}
+<script>
+export default {
+  name: "AccordionTransition"
+};
 </script>
 
 <style scoped>
