@@ -1,7 +1,10 @@
 <template>
   <div class="noteboardsPage" :style="{ width, height }">
     <div class="card text-center" style="height: 100%; overflow: hidden;">
-      <BoardsNavigation :boards="boards" @create-new-board="createNewBoard" />
+      <NoteboardNavigation
+        :boards="boards"
+        @create-new-board="createNewBoard"
+      />
       <!-- :key is required to allow transitions to work with the same component: 
       https://forum.vuejs.org/t/solved-vue-transitions-not-working/7614-->
       <FadeTransition>
@@ -12,15 +15,15 @@
 </template>
 
 <script>
-import BoardsNavigation from "@/components/boards-navigation/BoardsNavigation.vue";
+import NoteboardNavigation from "@/components/noteboard-navigation/NoteboardNavigation.vue";
 import FadeTransition from "@/components/transitions/FadeTransition.vue";
-import BoardsService from "@/services/api-services/BoardsService";
+import NoteboardsService from "@/services/api-services/NoteboardsService";
 
 export default {
   name: "NoteboardsPage",
   components: {
     FadeTransition,
-    BoardsNavigation
+    NoteboardNavigation
   },
   data() {
     return {
@@ -31,7 +34,7 @@ export default {
   },
   methods: {
     async retrieveBoards() {
-      const response = await BoardsService.getAll();
+      const response = await NoteboardsService.getAll();
       if (response.data) {
         this.boards = response.data;
       }

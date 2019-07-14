@@ -23,7 +23,7 @@ import _ from "lodash";
 import Util from "@/lib/util";
 import NoteList from "@/components/notes/NoteList.vue";
 import FadeTransition from "@/components/transitions/FadeTransition.vue";
-import BoardsService from "@/services/api-services/BoardsService";
+import NoteboardsService from "@/services/api-services/NoteboardsService";
 import NotesService from "@/services/api-services/NotesService";
 
 export default {
@@ -53,7 +53,7 @@ export default {
     async retrieveBoard() {
       this.board = null;
       this.boardLoaded = false;
-      const response = await BoardsService.getBoard(
+      const response = await NoteboardsService.getBoard(
         parseInt(this.$route.params.id)
       );
       if (response.data && !_.isEmpty(response.data)) {

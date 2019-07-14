@@ -1,8 +1,8 @@
 <template>
-  <div class="boardsNavigation">
+  <div class="noteboardNavigation">
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs">
-        <BoardsNavigationItem
+        <NoteboardNavigationItem
           v-for="board in boards"
           :key="board.id"
           :board="board"
@@ -23,12 +23,12 @@
 </template>
 
 <script>
-import BoardsNavigationItem from "@/components/boards-navigation/BoardsNavigationItem.vue";
+import NoteboardNavigationItem from "@/components/noteboard-navigation/NoteboardNavigationItem.vue";
 
 export default {
-  name: "BoardsNavigation",
+  name: "NoteboardNavigation",
   components: {
-    BoardsNavigationItem
+    NoteboardNavigationItem
   },
   props: {
     boards: {

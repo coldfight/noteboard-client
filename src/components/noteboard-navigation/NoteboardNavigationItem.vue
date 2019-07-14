@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "BoardsNavigationItem",
+  name: "NoteboardNavigationItem",
   props: {
     board: {
       type: Object,
