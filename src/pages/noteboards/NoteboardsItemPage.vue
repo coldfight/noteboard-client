@@ -85,7 +85,7 @@ export default class NoteboardsItemPage extends Vue {
   async retrieveBoard() {
     this.board = null;
     this.boardLoaded = false;
-    const response = await BoardsService.get(parseInt(this.$route.params.id));
+    const response = await BoardsService.getBoard(parseInt(this.$route.params.id));
     if (response.data && !_.isEmpty(response.data)) {
       // @todo: this weirdness because of firebase.. update once we use a real database
       this.board = response.data[_.keys(response.data)[0]];
@@ -98,7 +98,7 @@ export default class NoteboardsItemPage extends Vue {
     if (!this.board) {
       return;
     }
-    const response = await NotesService.getAllForBoard(this.board.id);
+    const response = await NotesService.getAllByBoardId(this.board.id);
     if (response.data && !_.isEmpty(response.data)) {
       // @todo: this weirdness because of firebase.. update once we use a real database
       const notes: Array<Note> = [];

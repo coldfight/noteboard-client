@@ -7,7 +7,7 @@ export default {
     return Axios.get(`${RESOURCE_NAME}.json`);
   },
 
-  get(id: number) {
+  getBoard(id: number) {
     return Axios.get(`${RESOURCE_NAME}.json?orderBy="id"&equalTo=${id}`);
   }
 };

@@ -32,6 +32,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 This is a good resource for bootstrap themes: https://bootswatch.com/sketchy/
 Help with transitions: https://markus.oberlehner.net/blog/vue-router-page-transitions/
+Help with vuex and typescript:  https://codeburst.io/vuex-and-typescript-3427ba78cfa8
+                                https://dev.to/sirtimbly/type-safe-vuex-state-usage-in-components-without-decorators-2b24
 
 Colors used by this bootstrap theme.
 blue: #007bff;
@@ -55,3 +57,4 @@ warning: #f97515;
 danger: #ff3c5c;
 light: #dbebfb;
 dark: #32334a;
+
