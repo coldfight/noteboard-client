@@ -1,6 +1,13 @@
 <template>
   <div class="noteList">
-    <NoteListItem v-for="note in notes" :key="note.id" :note="note" />
+    <template v-if="notes.length">
+      <NoteListItem v-for="note in notes" :key="note.id" :note="note" />
+    </template>
+    <template v-else>
+      <div>
+        No notes found. Start by creating one!
+      </div>
+    </template>
   </div>
 </template>
 

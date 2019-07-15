@@ -3,28 +3,30 @@
     <!-- This transition is necessary because because it might not be loaded 
     in time for the transition to nicely display this element-->
     <FadeTransition>
-      <div v-if="board" class="card-body" :style="boardItemCardStyles">
+      <div
+        v-if="currentNoteboard"
+        class="card-body"
+        :style="boardItemCardStyles"
+      >
         <NoteList :notes="notes" />
       </div>
     </FadeTransition>
     <div
-      v-if="!board && boardLoaded"
+      v-if="!currentNoteboard && boardLoaded"
       class="card-body"
       :style="{ height: '100%' }"
     >
       <!-- <span v-if="!boardLoaded">Loading...</span> -->
-      <span>Could not find Board</span>
+      <span>Could not find Noteboard</span>
     </div>
   </div>
 </template>
 
 <script>
-import _ from "lodash";
+import { mapActions, mapState } from "vuex";
 import util from "@/lib/util";
 import NoteList from "@/components/notes/NoteList.vue";
 import FadeTransition from "@/components/transitions/FadeTransition.vue";
-import NoteboardsService from "@/services/api-services/NoteboardsService";
-import NotesService from "@/services/api-services/NotesService";
 
 export default {
   name: "NoteboardsItemPage",
@@ -32,57 +34,19 @@ export default {
     NoteList,
     FadeTransition
   },
-  data() {
-    return {
-      board: null,
-      boardLoaded: false,
-      notes: []
-    };
-  },
-  watch: {
-    $route() {
-      this.retrieveData();
-    }
-  },
-  methods: {
-    async retrieveData() {
-      await this.retrieveBoard();
-      await this.retrieveNotes();
-    },
-
-    async retrieveBoard() {
-      this.board = null;
-      this.boardLoaded = false;
-      const response = await NoteboardsService.getBoard(
-        parseInt(this.$route.params.id)
-      );
-      if (response.data && !_.isEmpty(response.data)) {
-        // @todo: this weirdness because of firebase.. update once we use a real database
-        this.board = response.data[_.keys(response.data)[0]];
-      }
-      this.boardLoaded = true;
-    },
-
-    async retrieveNotes() {
-      this.notes = [];
-      if (!this.board) {
-        return;
-      }
-      const response = await NotesService.getAllByBoardId(this.board.id);
-      if (response.data && !_.isEmpty(response.data)) {
-        // @todo: this weirdness because of firebase.. update once we use a real database
-        const notes = [];
-        _.each(response.data, item => notes.push(item));
-        this.notes = notes;
-      }
-    }
-  },
   computed: {
+    ...mapState("notes", {
+      notes: state => state.notes
+    }),
+    ...mapState("noteboards", {
+      currentNoteboard: state => state.currentNoteboard,
+      boardLoaded: state => state.loaded
+    }),
     boardItemCardStyles() {
       const styles = { height: "100%" };
 
-      if (this.board) {
-        // styles.backgroundColor = this.board.color;
+      if (this.currentNoteboard) {
+        // styles.backgroundColor = this.currentNoteboard.color;
         // styles.color = this.autoColorFromBackgroundColor;
       }
 
@@ -90,10 +54,22 @@ export default {
     },
 
     autoColorFromBackgroundColor() {
-      if (this.board) {
-        return util.autoColorFromColor(this.board.color);
+      if (this.currentNoteboard) {
+        return util.autoColorFromColor(this.currentNoteboard.color);
       }
       return "#ffffff";
+    }
+  },
+  methods: {
+    ...mapActions("notes", {
+      getNotes: "GET_NOTES"
+    }),
+    ...mapActions("noteboards", {
+      getNoteboardById: "GET_NOTEBOARD_BY_ID"
+    }),
+    async retrieveData() {
+      this.getNoteboardById(this.$route.params.id);
+      this.getNotes(this.$route.params.id);
     }
   },
   beforeMount() {
