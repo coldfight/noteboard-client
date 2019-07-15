@@ -4,7 +4,11 @@
     ref="item"
     :style="cardStyles"
   >
-    <NoteListItemToolbar @toolbar-clicked="toggleBody" />
+    <NoteListItemToolbar
+      @toolbar-clicked="toggleBody"
+      @toolbar-held="toolbarHeld"
+      @toolbar-released="toolbarReleased"
+    />
     <AccordionTransition>
       <NoteListItemBody v-if="showBody" :note="note" />
     </AccordionTransition>
@@ -28,13 +32,19 @@ export default {
   },
   data() {
     return {
-      showBody: true
+      showBody: true,
+      position: {
+        x: this.note.posX,
+        y: this.note.posY
+      }
     };
   },
   computed: {
     cardStyles() {
       return {
-        backgroundColor: this.note.color
+        backgroundColor: this.note.color,
+        top: `${this.position.x}px`,
+        left: `${this.position.y}px`
       };
     },
     textColorClass() {
@@ -52,11 +62,13 @@ export default {
     },
     toggleBody() {
       this.showBody = !this.showBody;
+    },
+    toolbarHeld() {
+      console.log("toolbar held...");
+    },
+    toolbarReleased() {
+      console.log("toolbar released...");
     }
-  },
-  mounted() {
-    // @todo: arrange the item based on the note's position
-    // console.log(this.$refs.item);
   }
 };
 </script>
@@ -65,6 +77,6 @@ export default {
 .noteListItem {
   width: 250px;
   text-align: left;
-  /* position: absolute; */
+  position: absolute;
 }
 </style>

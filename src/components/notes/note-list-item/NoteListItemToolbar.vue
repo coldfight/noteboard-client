@@ -1,5 +1,13 @@
 <template>
-  <div @click.prevent="toolbarClicked" class="toolbar noselect">
+  <div
+    @mousedown="mouseHold"
+    @mouseup="mouseReleased"
+    @mouseleave="mouseReleased"
+    @touchstart="mouseHold"
+    @touchend="mouseReleased"
+    @touchcancel="mouseReleased"
+    class="toolbar noselect"
+  >
     <a
       href="#"
       @click.prevent.stop="editNote"
@@ -20,8 +28,17 @@
 </template>
 
 <script>
+// Anything greater than 15 will be registered as a mouse hold vs a mouse click
+const MOUSE_CLICK_THRESHOLD = 15;
+
 export default {
   name: "NoteListItemToolbar",
+  data() {
+    return {
+      timeHeldDown: 0,
+      interval: null
+    };
+  },
   methods: {
     editNote() {
       this.$emit("edit-note");
@@ -30,8 +47,22 @@ export default {
       confirm("Are you sure you want to delete this note?");
       this.$emit("delete-note");
     },
-    toolbarClicked() {
-      this.$emit("toolbar-clicked");
+    mouseHold() {
+      this.$emit("toolbar-held");
+      if (!this.interval) {
+        this.interval = setInterval(() => this.timeHeldDown++, 30);
+      }
+    },
+    mouseReleased() {
+      if (this.timeHeldDown <= MOUSE_CLICK_THRESHOLD) {
+        // This is a very short "hold" so register it as a click.
+        this.$emit("toolbar-clicked");
+      } else {
+        this.$emit("toolbar-released");
+      }
+      clearInterval(this.interval);
+      this.interval = false;
+      this.timeHeldDown = 0;
     }
   }
 };
