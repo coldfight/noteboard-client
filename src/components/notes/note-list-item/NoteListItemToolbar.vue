@@ -54,7 +54,7 @@ export default {
       }
     },
     mouseReleased() {
-      if (this.timeHeldDown <= MOUSE_CLICK_THRESHOLD) {
+      if (this.interval && this.timeHeldDown <= MOUSE_CLICK_THRESHOLD) {
         // This is a very short "hold" so register it as a click.
         this.$emit("toolbar-clicked");
       } else {
