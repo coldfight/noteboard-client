@@ -1,5 +1,6 @@
 <template>
   <div
+    @mousedown="itemSelected"
     :class="['noteListItem card mb-3', textColorClass]"
     ref="item"
     :style="cardStyles"
@@ -28,6 +29,11 @@ export default {
     note: {
       type: Object,
       required: true
+    },
+    highestZIndex: {
+      type: Number,
+      required: false,
+      default: 0
     }
   },
   data() {
@@ -36,7 +42,8 @@ export default {
       position: {
         x: this.note.posX,
         y: this.note.posY
-      }
+      },
+      zIndex: 1
     };
   },
   computed: {
@@ -44,7 +51,8 @@ export default {
       return {
         backgroundColor: this.note.color,
         top: `${this.position.x}px`,
-        left: `${this.position.y}px`
+        left: `${this.position.y}px`,
+        zIndex: this.zIndex
       };
     },
     textColorClass() {
@@ -57,9 +65,6 @@ export default {
   methods: {
     editNote() {},
     deleteNote() {},
-    toolbarClicked() {
-      console.log("I Clicked the toolbar, so I should collapse the body.");
-    },
     toggleBody() {
       this.showBody = !this.showBody;
     },
@@ -68,6 +73,10 @@ export default {
     },
     toolbarReleased() {
       console.log("toolbar released...");
+    },
+    itemSelected() {
+      this.zIndex = this.highestZIndex + 1;
+      this.$emit('item-selected')
     }
   }
 };

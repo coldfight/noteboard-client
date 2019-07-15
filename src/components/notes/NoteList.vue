@@ -1,7 +1,12 @@
 <template>
   <div class="noteList">
     <template v-if="notes.length">
-      <NoteListItem v-for="note in notes" :key="note.id" :note="note" />
+      <NoteListItem 
+      v-for="note in notes" 
+      :key="note.id" 
+      :note="note" 
+      :highest-z-index="highestZIndex"
+      @item-selected="itemSelected" />
     </template>
     <template v-else>
       <div>
@@ -23,6 +28,16 @@ export default {
     notes: {
       type: Array,
       default: () => []
+    }
+  },
+  data() {
+    return {
+      highestZIndex: 1
+    }
+  },
+  methods: {
+    itemSelected() {
+      this.highestZIndex++;
     }
   }
 };
