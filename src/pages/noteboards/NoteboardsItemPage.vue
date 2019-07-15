@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 import util from "@/lib/util";
 import NoteList from "@/components/notes/NoteList.vue";
 import FadeTransition from "@/components/transitions/FadeTransition.vue";
@@ -39,8 +39,13 @@ export default {
       notes: state => state.notes
     }),
     ...mapState("noteboards", {
-      currentNoteboard: state => state.currentNoteboard,
-      boardLoaded: state => state.loaded
+      currentNoteboard: state => state.currentNoteboard
+    }),
+    ...mapGetters("notes", {
+      notesLoaded: "LOADED"
+    }),
+    ...mapGetters("noteboards", {
+      boardLoaded: "LOADED"
     }),
     boardItemCardStyles() {
       const styles = { height: "100%" };
