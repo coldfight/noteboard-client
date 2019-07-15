@@ -20,7 +20,7 @@
 
 <script>
 import _ from "lodash";
-import Util from "@/lib/util";
+import util from "@/lib/util";
 import NoteList from "@/components/notes/NoteList.vue";
 import FadeTransition from "@/components/transitions/FadeTransition.vue";
 import NoteboardsService from "@/services/api-services/NoteboardsService";
@@ -91,7 +91,7 @@ export default {
 
     autoColorFromBackgroundColor() {
       if (this.board) {
-        return Util.autoColorFromColor(this.board.color);
+        return util.autoColorFromColor(this.board.color);
       }
       return "#ffffff";
     }

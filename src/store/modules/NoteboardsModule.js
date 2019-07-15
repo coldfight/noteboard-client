@@ -1,7 +1,30 @@
-// const state = {};
+import NoteboardsService from "@/services/api-services/NoteboardsService";
 
-// const getters = {};
+const state = {
+  noteboards: []
+};
 
-// const actions = {};
+const getters = {};
 
-// const mutations = {};
+const mutations = {
+  SET_NOTEBOARDS(state, noteboards) {
+    state.noteboards = noteboards;
+  }
+};
+
+const actions = {
+  async GET_NOTEBOARDS(context) {
+    const response = await NoteboardsService.getAll();
+    if (response && response.data) {
+      context.commit("SET_NOTEBOARDS", response.data);
+    }
+  }
+};
+
+export default {
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions
+};

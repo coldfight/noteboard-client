@@ -15,7 +15,7 @@
 import NoteListItemToolbar from "@/components/notes/note-list-item/NoteListItemToolbar.vue";
 import NoteListItemBody from "@/components/notes/note-list-item/NoteListItemBody.vue";
 import AccordionTransition from "@/components/transitions/AccordionTransition.vue";
-import Util from "@/lib/util";
+import util from "@/lib/util";
 
 export default {
   name: "NoteListItem",
@@ -38,7 +38,7 @@ export default {
       };
     },
     textColorClass() {
-      if (Util.useDarkColor(this.note.color)) {
+      if (util.useDarkColor(this.note.color)) {
         return "text-dark";
       }
       return "text-light";
