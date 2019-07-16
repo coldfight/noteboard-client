@@ -1,7 +1,11 @@
 <template>
   <div
     @mousedown="itemSelected"
-    :class="['noteListItem card mb-3', textColorClass]"
+    :class="[
+      'noteListItem card',
+      textColorClass,
+      { cardSelected: readyToDrag }
+    ]"
     ref="item"
     :style="cardStyles"
   >
@@ -16,7 +20,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from "vuex";
 import NoteListItemToolbar from "@/components/notes/note-list-item/NoteListItemToolbar.vue";
 import NoteListItemBody from "@/components/notes/note-list-item/NoteListItemBody.vue";
 import AccordionTransition from "@/components/transitions/AccordionTransition.vue";
@@ -56,7 +60,7 @@ export default {
   watch: {
     /**
      * @todo: I most likely do NOT want to use the delta position of the mouse. Here's an issue:
-     * If your mouse goes off the "draggable" area, slowly, slowly the NoteListItem will get 
+     * If your mouse goes off the "draggable" area, slowly, slowly the NoteListItem will get
      * farther and farther away from the mouse position. Better to anchor it at the mouse
      * position. This means I'll have to normalize the mouse position to fit the #'s
      * for the card position.
@@ -64,7 +68,11 @@ export default {
      * be less than 0 in x or y.
      */
     mousePositionDelta(newDeltaPosition) {
-      console.log("NoteListItem: mousePositionDelta()", newDeltaPosition.x, newDeltaPosition.y)
+      console.log(
+        "NoteListItem: mousePositionDelta()",
+        newDeltaPosition.x,
+        newDeltaPosition.y
+      );
       if (this.readyToDrag && this.globalMousePressed) {
         this.position = {
           x: this.position.x + newDeltaPosition.y,
@@ -73,15 +81,15 @@ export default {
       }
     },
     globalMousePressed(newValue, oldValue) {
-      console.log("NoteListItem: globalMousePressed()", newValue, oldValue)
+      console.log("NoteListItem: globalMousePressed()", newValue, oldValue);
       if (this.readyToDrag && oldValue && !newValue) {
-        this.readyToDrag = false
+        this.readyToDrag = false;
       }
     }
   },
   computed: {
     ...mapState({
-      globalMousePressed: 'mousePressed'
+      globalMousePressed: "mousePressed"
     }),
     cardStyles() {
       return {
@@ -105,15 +113,15 @@ export default {
       this.showBody = !this.showBody;
     },
     toolbarHeld() {
-      console.log("NoteListItem: toolbarHeld()")
+      console.log("NoteListItem: toolbarHeld()");
       this.readyToDrag = true;
     },
     /**
-     * This gets triggered anytime the mouse clicks anywhere on the whole 
+     * This gets triggered anytime the mouse clicks anywhere on the whole
      * NoteListItem div. (including, toolbar, body, action buttons, etc)
      */
     itemSelected() {
-      console.log("NoteListItem: itemSelected()")
+      console.log("NoteListItem: itemSelected()");
       this.zIndex = this.highestZIndex + 1;
       this.$emit("item-selected");
     }
@@ -126,5 +134,11 @@ export default {
   width: 250px;
   text-align: left;
   position: absolute;
+}
+.cardSelected {
+  -webkit-box-shadow: 10px 7px 21px -3px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 7px 21px -3px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 7px 21px -3px rgba(0, 0, 0, 0.75);
+  transform: scale(1.01);
 }
 </style>

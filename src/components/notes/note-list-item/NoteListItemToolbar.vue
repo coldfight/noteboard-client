@@ -2,12 +2,22 @@
   <div
     @mousedown="mouseHold"
     @touchstart="mouseHold"
-    class="toolbar noselect"
+    :class="['toolbar noselect', { grabbed: !!interval }]"
   >
-    <a href="#" @click.prevent.stop="editNote" class="text-light" title="Edit Note">
+    <a
+      href="#"
+      @click.prevent.stop="editNote"
+      class="text-light"
+      title="Edit Note"
+    >
       <span class="oi oi-pencil" aria-hidden="true"></span>
     </a>
-    <a href="#" @click.prevent.stop="deleteNote" class="text-light" title="Delete Note">
+    <a
+      href="#"
+      @click.prevent.stop="deleteNote"
+      class="text-light"
+      title="Delete Note"
+    >
       <span class="oi oi-trash" aria-hidden="true"></span>
     </a>
   </div>
@@ -47,17 +57,20 @@ export default {
       this.$emit("delete-note");
     },
     mouseHold() {
-      console.log("NoteListItemToolbar: mouseHold()")
+      console.log("NoteListItemToolbar: mouseHold()");
       this.$emit("toolbar-held");
       if (!this.interval) {
         this.interval = setInterval(() => {
-          console.log("NoteListItemToolbar: interval running", this.timeHeldDown);
+          console.log(
+            "NoteListItemToolbar: interval running",
+            this.timeHeldDown
+          );
           this.timeHeldDown++;
         }, 30);
       }
     },
     mouseReleased() {
-      console.log("NoteListItemToolbar: mouseReleased()")
+      console.log("NoteListItemToolbar: mouseReleased()");
       if (this.interval && this.timeHeldDown <= MOUSE_CLICK_THRESHOLD) {
         // This is a very short "hold" so register it as a click.
         this.$emit("toolbar-clicked");
@@ -76,6 +89,12 @@ export default {
   background-color: black;
   text-align: right;
   cursor: grab;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 .toolbar a {
   font-size: 0.85em;
