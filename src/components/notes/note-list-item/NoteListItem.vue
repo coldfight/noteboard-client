@@ -8,7 +8,6 @@
     <NoteListItemToolbar
       @toolbar-clicked="toggleBody"
       @toolbar-held="toolbarHeld"
-      @toolbar-released="toolbarReleased"
     />
     <AccordionTransition>
       <NoteListItemBody v-if="showBody" :note="note" />
@@ -17,6 +16,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex';
 import NoteListItemToolbar from "@/components/notes/note-list-item/NoteListItemToolbar.vue";
 import NoteListItemBody from "@/components/notes/note-list-item/NoteListItemBody.vue";
 import AccordionTransition from "@/components/transitions/AccordionTransition.vue";
@@ -54,16 +54,35 @@ export default {
     };
   },
   watch: {
+    /**
+     * @todo: I most likely do NOT want to use the delta position of the mouse. Here's an issue:
+     * If your mouse goes off the "draggable" area, slowly, slowly the NoteListItem will get 
+     * farther and farther away from the mouse position. Better to anchor it at the mouse
+     * position. This means I'll have to normalize the mouse position to fit the #'s
+     * for the card position.
+     * @todo: Another thing I'll have to do is ensure that the NotListItem's position cannot
+     * be less than 0 in x or y.
+     */
     mousePositionDelta(newDeltaPosition) {
-      if (this.readyToDrag) {
+      console.log("NoteListItem: mousePositionDelta()", newDeltaPosition.x, newDeltaPosition.y)
+      if (this.readyToDrag && this.globalMousePressed) {
         this.position = {
           x: this.position.x + newDeltaPosition.y,
           y: this.position.y + newDeltaPosition.x
         };
       }
+    },
+    globalMousePressed(newValue, oldValue) {
+      console.log("NoteListItem: globalMousePressed()", newValue, oldValue)
+      if (this.readyToDrag && oldValue && !newValue) {
+        this.readyToDrag = false
+      }
     }
   },
   computed: {
+    ...mapState({
+      globalMousePressed: 'mousePressed'
+    }),
     cardStyles() {
       return {
         backgroundColor: this.note.color,
@@ -85,21 +104,16 @@ export default {
     toggleBody() {
       this.showBody = !this.showBody;
     },
-    /**
-     * @todo: To Fix the issue with the "mouseUp" event not firing when the mouse
-     * is outside of the NoteListItem, you'll need to have the even handler
-     * triggered outisde of the NoteListItem, and have it "trickle" down
-     * to each individual NoteListItem. YOu need the mousedown event
-     * on the NoteListITem as well so we know which item was
-     * selected.
-     */
     toolbarHeld() {
+      console.log("NoteListItem: toolbarHeld()")
       this.readyToDrag = true;
     },
-    toolbarReleased() {
-      this.readyToDrag = false;
-    },
+    /**
+     * This gets triggered anytime the mouse clicks anywhere on the whole 
+     * NoteListItem div. (including, toolbar, body, action buttons, etc)
+     */
     itemSelected() {
+      console.log("NoteListItem: itemSelected()")
       this.zIndex = this.highestZIndex + 1;
       this.$emit("item-selected");
     }

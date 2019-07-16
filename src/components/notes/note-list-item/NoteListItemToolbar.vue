@@ -1,38 +1,37 @@
 <template>
   <div
     @mousedown="mouseHold"
-    @mouseup="mouseReleased"
-    @mouseleave="mouseLeft"
     @touchstart="mouseHold"
-    @touchend="mouseReleased"
-    @touchcancel="mouseReleased"
     class="toolbar noselect"
   >
-    <a
-      href="#"
-      @click.prevent.stop="editNote"
-      class="text-light"
-      title="Edit Note"
-    >
+    <a href="#" @click.prevent.stop="editNote" class="text-light" title="Edit Note">
       <span class="oi oi-pencil" aria-hidden="true"></span>
     </a>
-    <a
-      href="#"
-      @click.prevent.stop="deleteNote"
-      class="text-light"
-      title="Delete Note"
-    >
+    <a href="#" @click.prevent.stop="deleteNote" class="text-light" title="Delete Note">
       <span class="oi oi-trash" aria-hidden="true"></span>
     </a>
   </div>
 </template>
 
 <script>
-// Anything greater than 15 will be registered as a mouse hold vs a mouse click
-const MOUSE_CLICK_THRESHOLD = 15;
+import { mapState } from "vuex";
+// Anything greater than 7 will be registered as a mouse hold vs a mouse click
+const MOUSE_CLICK_THRESHOLD = 7;
 
 export default {
   name: "NoteListItemToolbar",
+  watch: {
+    globalMousePressed(newValue, oldValue) {
+      if (this.interval && oldValue && !newValue) {
+        this.mouseReleased();
+      }
+    }
+  },
+  computed: {
+    ...mapState({
+      globalMousePressed: "mousePressed"
+    })
+  },
   data() {
     return {
       timeHeldDown: 0,
@@ -48,12 +47,17 @@ export default {
       this.$emit("delete-note");
     },
     mouseHold() {
+      console.log("NoteListItemToolbar: mouseHold()")
       this.$emit("toolbar-held");
       if (!this.interval) {
-        this.interval = setInterval(() => this.timeHeldDown++, 30);
+        this.interval = setInterval(() => {
+          console.log("NoteListItemToolbar: interval running", this.timeHeldDown);
+          this.timeHeldDown++;
+        }, 30);
       }
     },
     mouseReleased() {
+      console.log("NoteListItemToolbar: mouseReleased()")
       if (this.interval && this.timeHeldDown <= MOUSE_CLICK_THRESHOLD) {
         // This is a very short "hold" so register it as a click.
         this.$emit("toolbar-clicked");
@@ -62,9 +66,6 @@ export default {
       clearInterval(this.interval);
       this.interval = false;
       this.timeHeldDown = 0;
-    },
-    mouseLeft() {
-      // @todo: if mouse left and is not "clicked" anymore, then register as a mouseReleased
     }
   }
 };

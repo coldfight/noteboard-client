@@ -8,7 +8,7 @@
           :note="note"
           :mouse-position-delta="mousePositionDelta"
           :highest-z-index="highestZIndex"
-          @item-selected="itemSelected"
+          @item-selected="increaseZIndex"
         />
       </template>
       <template v-else>
@@ -60,7 +60,7 @@ export default {
     };
   },
   methods: {
-    itemSelected() {
+    increaseZIndex() {
       this.highestZIndex++;
     },
     onMouseMove(e) {
@@ -68,7 +68,27 @@ export default {
         x: e.movementX,
         y: e.movementY
       };
+    },
+    mouseDown() {
+      this.$store.dispatch('PRESS_MOUSE');
+      console.log('NoteList: mouseDown()')
+    },
+    mouseUp() {
+      this.$store.dispatch('RELEASE_MOUSE');
+      console.log('NoteList: mouseUp()')
     }
+  },
+  created() {
+    // @todo: I might want to add the touch events
+    document.addEventListener("mousedown", this.mouseDown);
+    document.addEventListener("mouseleave", this.mouseDown);
+    document.addEventListener("mouseup", this.mouseUp);
+  },
+  beforeDestroy() {
+    // @todo: I might want to add the touch events
+    document.removeEventListener("mousedown", this.mouseDown);
+    document.removeEventListener("mouseleave", this.mouseDown);
+    document.removeEventListener("mouseup", this.mouseUp);
   }
 };
 </script>
