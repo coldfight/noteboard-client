@@ -15,17 +15,20 @@
         <div>No notes found. Start by creating one!</div>
       </template>
     </div>
+    <ButtonCircularFloating />
   </div>
 </template>
 
 <script>
-import NoteListItem from "@/components/notes/note-list-item/NoteListItem.vue";
 import util from "@/lib/util";
+import NoteListItem from "@/components/notes/note-list-item/NoteListItem.vue";
+import ButtonCircularFloating from "@/components/common/ButtonCircularFloating.vue";
 
 export default {
   name: "NoteList",
   components: {
-    NoteListItem
+    NoteListItem,
+    ButtonCircularFloating
   },
   props: {
     notes: {
