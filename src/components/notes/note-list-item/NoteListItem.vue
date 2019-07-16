@@ -34,6 +34,12 @@ export default {
       type: Number,
       required: false,
       default: 0
+    },
+    mousePositionDelta: {
+      type: Object,
+      default: () => {
+        return { x: 0, y: 0 };
+      }
     }
   },
   data() {
@@ -43,8 +49,19 @@ export default {
         x: this.note.posX,
         y: this.note.posY
       },
-      zIndex: 1
+      zIndex: 1,
+      readyToDrag: false
     };
+  },
+  watch: {
+    mousePositionDelta(newDeltaPosition) {
+      if (this.readyToDrag) {
+        this.position = {
+          x: this.position.x + newDeltaPosition.y,
+          y: this.position.y + newDeltaPosition.x
+        };
+      }
+    }
   },
   computed: {
     cardStyles() {
@@ -68,11 +85,19 @@ export default {
     toggleBody() {
       this.showBody = !this.showBody;
     },
+    /**
+     * @todo: To Fix the issue with the "mouseUp" event not firing when the mouse
+     * is outside of the NoteListItem, you'll need to have the even handler
+     * triggered outisde of the NoteListItem, and have it "trickle" down
+     * to each individual NoteListItem. YOu need the mousedown event
+     * on the NoteListITem as well so we know which item was
+     * selected.
+     */
     toolbarHeld() {
-      console.log("toolbar held...");
+      this.readyToDrag = true;
     },
     toolbarReleased() {
-      console.log("toolbar released...");
+      this.readyToDrag = false;
     },
     itemSelected() {
       this.zIndex = this.highestZIndex + 1;

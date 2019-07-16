@@ -6,6 +6,7 @@
           v-for="note in notes"
           :key="note.id"
           :note="note"
+          :mouse-position-delta="mousePositionDelta"
           :highest-z-index="highestZIndex"
           @item-selected="itemSelected"
         />
@@ -51,7 +52,11 @@ export default {
   },
   data() {
     return {
-      highestZIndex: 1
+      highestZIndex: 1,
+      mousePositionDelta: {
+        x: 0,
+        y: 0
+      }
     };
   },
   methods: {
@@ -59,7 +64,10 @@ export default {
       this.highestZIndex++;
     },
     onMouseMove(e) {
-      console.log("mouse moving", e);
+      this.mousePositionDelta = {
+        x: e.movementX,
+        y: e.movementY
+      };
     }
   }
 };

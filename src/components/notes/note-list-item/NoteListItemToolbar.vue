@@ -2,7 +2,7 @@
   <div
     @mousedown="mouseHold"
     @mouseup="mouseReleased"
-    @mouseleave="mouseReleased"
+    @mouseleave="mouseLeft"
     @touchstart="mouseHold"
     @touchend="mouseReleased"
     @touchcancel="mouseReleased"
@@ -57,12 +57,14 @@ export default {
       if (this.interval && this.timeHeldDown <= MOUSE_CLICK_THRESHOLD) {
         // This is a very short "hold" so register it as a click.
         this.$emit("toolbar-clicked");
-      } else {
-        this.$emit("toolbar-released");
       }
+      this.$emit("toolbar-released");
       clearInterval(this.interval);
       this.interval = false;
       this.timeHeldDown = 0;
+    },
+    mouseLeft() {
+      // @todo: if mouse left and is not "clicked" anymore, then register as a mouseReleased
     }
   }
 };
