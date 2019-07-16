@@ -71,11 +71,11 @@ export default {
     },
     mouseDown() {
       this.$store.dispatch("PRESS_MOUSE");
-      console.log("NoteList: mouseDown()");
+      // console.log("NoteList: mouseDown()");
     },
     mouseUp() {
       this.$store.dispatch("RELEASE_MOUSE");
-      console.log("NoteList: mouseUp()");
+      // console.log("NoteList: mouseUp()");
     }
   },
   created() {

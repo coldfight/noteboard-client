@@ -68,11 +68,11 @@ export default {
      * be less than 0 in x or y.
      */
     mousePositionDelta(newDeltaPosition) {
-      console.log(
-        "NoteListItem: mousePositionDelta()",
-        newDeltaPosition.x,
-        newDeltaPosition.y
-      );
+      // console.log(
+      //   "NoteListItem: mousePositionDelta()",
+      //   newDeltaPosition.x,
+      //   newDeltaPosition.y
+      // );
       if (this.readyToDrag && this.globalMousePressed) {
         this.position = {
           x: this.position.x + newDeltaPosition.y,
@@ -81,7 +81,7 @@ export default {
       }
     },
     globalMousePressed(newValue, oldValue) {
-      console.log("NoteListItem: globalMousePressed()", newValue, oldValue);
+      // console.log("NoteListItem: globalMousePressed()", newValue, oldValue);
       if (this.readyToDrag && oldValue && !newValue) {
         this.readyToDrag = false;
       }
@@ -113,7 +113,7 @@ export default {
       this.showBody = !this.showBody;
     },
     toolbarHeld() {
-      console.log("NoteListItem: toolbarHeld()");
+      // console.log("NoteListItem: toolbarHeld()");
       this.readyToDrag = true;
     },
     /**
@@ -121,7 +121,7 @@ export default {
      * NoteListItem div. (including, toolbar, body, action buttons, etc)
      */
     itemSelected() {
-      console.log("NoteListItem: itemSelected()");
+      // console.log("NoteListItem: itemSelected()");
       this.zIndex = this.highestZIndex + 1;
       this.$emit("item-selected");
     }
