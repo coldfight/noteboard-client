@@ -3,35 +3,30 @@
     <!-- This transition is necessary because because it might not be loaded 
     in time for the transition to nicely display this element-->
     <FadeTransition>
-      <div
+      <NoteList
         v-if="currentNoteboard"
-        class="card-body"
-        :style="boardItemCardStyles"
-      >
-        <NoteList :notes="notes" />
-      </div>
+        :noteboard="currentNoteboard"
+        :notes="notes"
+      />
+      <Loading v-else-if="!currentNoteboard && !boardLoaded" />
+      <NotFound v-else>Could not find Noteboard</NotFound>
     </FadeTransition>
-    <div
-      v-if="!currentNoteboard && boardLoaded"
-      class="card-body"
-      :style="{ height: '100%' }"
-    >
-      <!-- <span v-if="!boardLoaded">Loading...</span> -->
-      <span>Could not find Noteboard</span>
-    </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState, mapGetters } from "vuex";
-import util from "@/lib/util";
 import NoteList from "@/components/notes/NoteList.vue";
+import NotFound from "@/components/common/NotFound.vue";
+import Loading from "@/components/common/Loading.vue";
 import FadeTransition from "@/components/transitions/FadeTransition.vue";
 
 export default {
   name: "NoteboardsItemPage",
   components: {
     NoteList,
+    Loading,
+    NotFound,
     FadeTransition
   },
   computed: {
@@ -46,24 +41,7 @@ export default {
     }),
     ...mapGetters("noteboards", {
       boardLoaded: "LOADED"
-    }),
-    boardItemCardStyles() {
-      const styles = { height: "100%" };
-
-      if (this.currentNoteboard) {
-        // styles.backgroundColor = this.currentNoteboard.color;
-        // styles.color = this.autoColorFromBackgroundColor;
-      }
-
-      return styles;
-    },
-
-    autoColorFromBackgroundColor() {
-      if (this.currentNoteboard) {
-        return util.autoColorFromColor(this.currentNoteboard.color);
-      }
-      return "#ffffff";
-    }
+    })
   },
   methods: {
     ...mapActions("notes", {

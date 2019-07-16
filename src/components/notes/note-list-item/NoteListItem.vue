@@ -76,7 +76,7 @@ export default {
     },
     itemSelected() {
       this.zIndex = this.highestZIndex + 1;
-      this.$emit('item-selected')
+      this.$emit("item-selected");
     }
   }
 };
