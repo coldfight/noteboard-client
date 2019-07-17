@@ -39,7 +39,7 @@ export default {
       required: false,
       default: 0
     },
-    mousePositionDelta: {
+    mouseClientPosition: {
       type: Object,
       default: () => {
         return { x: 0, y: 0 };
@@ -58,16 +58,7 @@ export default {
     };
   },
   watch: {
-    /**
-     * @todo: I most likely do NOT want to use the delta position of the mouse. Here's an issue:
-     * If your mouse goes off the "draggable" area, slowly, slowly the NoteListItem will get
-     * farther and farther away from the mouse position. Better to anchor it at the mouse
-     * position. This means I'll have to normalize the mouse position to fit the #'s
-     * for the card position.
-     * @todo: Another thing I'll have to do is ensure that the NotListItem's position cannot
-     * be less than 0 in x or y.
-     */
-    mousePositionDelta(newDeltaPosition) {
+    mouseClientPosition(newMousePosition, oldMousePosition) {
       // console.log(
       //   "NoteListItem: mousePositionDelta()",
       //   newDeltaPosition.x,
@@ -75,8 +66,8 @@ export default {
       // );
       if (this.readyToDrag && this.globalMousePressed) {
         this.position = {
-          x: this.position.x + newDeltaPosition.y,
-          y: this.position.y + newDeltaPosition.x
+          x: this.position.x + (newMousePosition.x - oldMousePosition.x),
+          y: this.position.y + (newMousePosition.y - oldMousePosition.y), 
         };
       }
     },

@@ -1,5 +1,8 @@
 <template>
-  <button :class="['btn btn-primary btn-circle', customClasses]" :style="customStyles">
+  <button
+    :class="['btn btn-primary btn-circle', customClasses]"
+    :style="customStyles"
+  >
     N
   </button>
 </template>
@@ -24,11 +27,11 @@ export default {
     return {
       customStyles: {
         position: "fixed",
-        right: this.size === BUTTON_SMALL ? '15px' : '35px',
-        bottom: this.size === BUTTON_SMALL ? '15px' : '35px'
+        right: this.size === BUTTON_SMALL ? "15px" : "35px",
+        bottom: this.size === BUTTON_SMALL ? "15px" : "35px"
       },
       customClasses: {
-        'btn-xl': this.size === BUTTON_LARGE
+        "btn-xl": this.size === BUTTON_LARGE
       }
     };
   }
@@ -37,6 +40,7 @@ export default {
 
 <style scoped>
 .btn-circle {
+  z-index: 9999999999;
   width: 30px;
   height: 30px;
   padding: 6px 0px;

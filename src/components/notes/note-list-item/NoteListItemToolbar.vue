@@ -4,12 +4,7 @@
     @touchstart.self="mouseHold"
     :class="['toolbar noselect', { grabbed: !!interval }]"
   >
-    <a
-      href="#"
-      @click.prevent="editNote"
-      class="text-light"
-      title="Edit Note"
-    >
+    <a href="#" @click.prevent="editNote" class="text-light" title="Edit Note">
       <span class="oi oi-pencil" aria-hidden="true"></span>
     </a>
     <a

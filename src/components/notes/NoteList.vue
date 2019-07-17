@@ -6,7 +6,7 @@
           v-for="note in notes"
           :key="note.id"
           :note="note"
-          :mouse-position-delta="mousePositionDelta"
+          :mouse-client-position="mouseClientPosition"
           :highest-z-index="highestZIndex"
           @item-selected="increaseZIndex"
         />
@@ -56,7 +56,7 @@ export default {
   data() {
     return {
       highestZIndex: 1,
-      mousePositionDelta: {
+      mouseClientPosition: {
         x: 0,
         y: 0
       }
@@ -67,10 +67,11 @@ export default {
       this.highestZIndex++;
     },
     onMouseMove(e) {
-      this.mousePositionDelta = {
-        x: e.movementX,
-        y: e.movementY
-      };
+      // I don't understand why x, and y are switched.
+      this.mouseClientPosition = {
+        x: e.clientY,
+        y: e.clientX
+      }
     },
     mouseDown() {
       this.$store.dispatch("PRESS_MOUSE");

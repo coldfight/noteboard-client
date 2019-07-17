@@ -1,5 +1,5 @@
 <template>
-  <div class="noteboardsItemPage" style="height: 100%;">
+  <div class="noteboardsItemPage">
     <!-- This transition is necessary because because it might not be loaded 
     in time for the transition to nicely display this element-->
     <FadeTransition>
@@ -60,3 +60,15 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.noteboardsItemPage {
+  height: 100%;
+  overflow: scroll;
+  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.noteboardsItemPage::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+</style>
