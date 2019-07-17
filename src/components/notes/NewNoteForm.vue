@@ -1,5 +1,5 @@
 <template>
-  <div class="newNoteForm card">
+  <div class="newNoteForm card" style="background-color: #42424f;">
     <NoteListItemToolbar
       :action-buttons="['delete']"
       @delete-note="closeForm"
@@ -25,6 +25,10 @@
           ></textarea>
         </div>
 
+        <div class="form-group">
+          <ColorPicker v-model="colors" :swatches="colorSwatch" />
+        </div>
+
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
@@ -32,11 +36,19 @@
 </template>
 
 <script>
+import {Slider as ColorPicker} from  "vue-color";
+
 import NoteListItemToolbar from "@/components/notes/note-list-item/NoteListItemToolbar.vue";
 
 export default {
   name: "NewNoteForm",
-  components: { NoteListItemToolbar },
+  components: { NoteListItemToolbar, ColorPicker },
+  data() {
+    return {
+      colors: {},
+      colorSwatch: ['0.9', '.80', '.65', '.50', '.35', '.20', '0.1']
+    }
+  },
   methods: {
     closeForm() {
       this.$emit("close-form");
