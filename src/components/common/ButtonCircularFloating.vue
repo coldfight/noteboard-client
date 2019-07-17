@@ -2,8 +2,9 @@
   <button
     :class="['btn btn-primary btn-circle', customClasses]"
     :style="customStyles"
+    @click.prevent="buttonPressed"
   >
-    N
+    +
   </button>
 </template>
 
@@ -34,13 +35,17 @@ export default {
         "btn-xl": this.size === BUTTON_LARGE
       }
     };
+  },
+  methods: {
+    buttonPressed() {
+      this.$emit("button-pressed");
+    }
   }
 };
 </script>
 
 <style scoped>
 .btn-circle {
-  z-index: 9999999999;
   width: 30px;
   height: 30px;
   padding: 6px 0px;

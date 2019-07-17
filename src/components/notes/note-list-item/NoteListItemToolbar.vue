@@ -4,10 +4,17 @@
     @touchstart.self="mouseHold"
     :class="['toolbar noselect', { grabbed: !!interval }]"
   >
-    <a href="#" @click.prevent="editNote" class="text-light" title="Edit Note">
+    <a
+      v-if="isEditable"
+      href="#"
+      @click.prevent="editNote"
+      class="text-light"
+      title="Edit Note"
+    >
       <span class="oi oi-pencil" aria-hidden="true"></span>
     </a>
     <a
+      v-if="isDeletable"
       href="#"
       @click.prevent="deleteNote"
       class="text-light"
@@ -22,9 +29,23 @@
 import { mapState } from "vuex";
 // Anything greater than 7 will be registered as a mouse hold vs a mouse click
 const MOUSE_CLICK_THRESHOLD = 7;
+const ACTION_EDIT = "edit";
+const ACTION_DELETE = "delete";
 
 export default {
   name: "NoteListItemToolbar",
+  props: {
+    actionButtons: {
+      type: Array,
+      default: () => [ACTION_EDIT, ACTION_DELETE],
+      validator: function(actions) {
+        const allowedActions = [ACTION_EDIT, ACTION_DELETE];
+        return actions.every(a => {
+          return allowedActions.indexOf(a) >= 0;
+        });
+      }
+    }
+  },
   watch: {
     globalMousePressed(newValue, oldValue) {
       if (this.interval && oldValue && !newValue) {
@@ -35,7 +56,13 @@ export default {
   computed: {
     ...mapState({
       globalMousePressed: "mousePressed"
-    })
+    }),
+    isEditable() {
+      return this.hasAction(ACTION_EDIT);
+    },
+    isDeletable() {
+      return this.hasAction(ACTION_DELETE);
+    }
   },
   data() {
     return {
@@ -44,11 +71,13 @@ export default {
     };
   },
   methods: {
+    hasAction(action) {
+      return this.actionButtons.indexOf(action) >= 0;
+    },
     editNote() {
       this.$emit("edit-note");
     },
     deleteNote() {
-      confirm("Are you sure you want to delete this note?");
       this.$emit("delete-note");
     },
     mouseHold() {

@@ -1,6 +1,6 @@
 <template>
   <div class="card-body" :style="boardItemCardStyles" @mousemove="onMouseMove">
-    <div class="noteList">
+    <div class="noteList" :style="{ 'z-index': layerOrderNoteList }">
       <template v-if="notes.length">
         <NoteListItem
           v-for="note in notes"
@@ -15,20 +15,36 @@
         <div>No notes found. Start by creating one!</div>
       </template>
     </div>
-    <ButtonCircularFloating />
+    <ButtonCircularFloating
+      @button-pressed="createNewNoteForm"
+      :style="{ 'z-index': layerOrderHoveringButton }"
+    />
+
+    <FadeTransition>
+      <NewNoteForm
+        v-if="displayNewNoteForm"
+        :style="{ 'z-index': layerOrderHoveringForm }"
+        @close-form="closeNewNoteForm"
+      />
+    </FadeTransition>
   </div>
 </template>
 
 <script>
 import util from "@/lib/util";
 import NoteListItem from "@/components/notes/note-list-item/NoteListItem.vue";
+import NewNoteForm from "@/components/notes/NewNoteForm.vue";
 import ButtonCircularFloating from "@/components/common/ButtonCircularFloating.vue";
+import layerOrder from "@/lib/layerOrder";
+import FadeTransition from "@/components/transitions/FadeTransition.vue";
 
 export default {
   name: "NoteList",
   components: {
     NoteListItem,
-    ButtonCircularFloating
+    ButtonCircularFloating,
+    NewNoteForm,
+    FadeTransition
   },
   props: {
     notes: {
@@ -41,6 +57,15 @@ export default {
     }
   },
   computed: {
+    layerOrderNoteList() {
+      return layerOrder.NOTE_LIST;
+    },
+    layerOrderHoveringButton() {
+      return layerOrder.HOVERING_BUTTON;
+    },
+    layerOrderHoveringForm() {
+      return layerOrder.HOVERING_FORM;
+    },
     boardItemCardStyles() {
       return {
         height: "100%"
@@ -59,10 +84,17 @@ export default {
       mouseClientPosition: {
         x: 0,
         y: 0
-      }
+      },
+      displayNewNoteForm: false
     };
   },
   methods: {
+    closeNewNoteForm() {
+      this.displayNewNoteForm = false;
+    },
+    createNewNoteForm() {
+      this.displayNewNoteForm = true;
+    },
     increaseZIndex() {
       this.highestZIndex++;
     },
@@ -71,7 +103,7 @@ export default {
       this.mouseClientPosition = {
         x: e.clientY,
         y: e.clientX
-      }
+      };
     },
     mouseDown() {
       this.$store.dispatch("PRESS_MOUSE");
