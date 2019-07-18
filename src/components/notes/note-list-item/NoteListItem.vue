@@ -66,8 +66,8 @@ export default {
       // );
       if (this.readyToDrag && this.globalMousePressed) {
         this.position = {
-          x: this.position.x + (newMousePosition.x - oldMousePosition.x),
-          y: this.position.y + (newMousePosition.y - oldMousePosition.y)
+          x: Math.max(0, this.position.x + (newMousePosition.x - oldMousePosition.x)),
+          y: Math.max(0, this.position.y + (newMousePosition.y - oldMousePosition.y))
         };
       }
     },

@@ -67,8 +67,11 @@ export default {
       return layerOrder.HOVERING_FORM;
     },
     boardItemCardStyles() {
+      // @todo: Increase the width AND height of the card-body as you drag the notes off screen.
+      // @todo: save the width and height and load it
       return {
-        height: "100%"
+        height: "100%",
+        width: "100%"
         // backgroundColor: this.currentNoteboard.color,
         // color: this.autoColorFromBackgroundColor
       };

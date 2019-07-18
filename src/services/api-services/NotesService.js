@@ -7,5 +7,10 @@ export default {
     return Axios.get(
       `${RESOURCE_NAME}.json?orderBy="boardId"&equalTo=${boardId}`
     );
+  },
+  createNote(noteObj) {
+    return Axios.post(`${RESOURCE_NAME}.json`, {
+      ...noteObj
+    });
   }
 };
