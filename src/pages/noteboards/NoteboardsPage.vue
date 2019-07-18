@@ -32,18 +32,17 @@ export default {
     };
   },
   watch: {
-    routeAndNoteboardsChanged() {
+    /**
+     * I have this to prevent object watching... more performant to check for
+     * changes on a string rather than a whole $route object.
+     */
+    routeName() {
       this.checkForRedirect();
     }
   },
   computed: {
-    /**
-     * Used to detect a change in route path and that noteboards has been fetched.
-     * We set a watcher on this computed property to properly redirect to the
-     * first fetched noteboard.
-     */
-    routeAndNoteboardsChanged() {
-      return `R:${this.$route.fullPath},B:${this.noteboards.length}`;
+    routeName() {
+      return this.$route.name;
     },
     ...mapState("noteboards", {
       noteboards: state => state.noteboards
@@ -69,7 +68,8 @@ export default {
     createNewBoard() {}
   },
   async beforeMount() {
-    this.getNoteboards();
+    await this.getNoteboards();
+    this.checkForRedirect();
   }
 };
 </script>

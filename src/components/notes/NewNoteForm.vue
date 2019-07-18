@@ -1,27 +1,29 @@
 <template>
-  <div class="newNoteForm card" style="background-color: #42424f;">
+  <div class="newNoteForm card" :style="cardStyles">
     <NoteListItemToolbar
       :action-buttons="['delete']"
       @delete-note="closeForm"
     />
     <div class="card-body">
-      <form>
+      <form @submit.prevent="submitForm">
         <div class="form-group">
           <input
             type="text"
-            class="form-control"
+            :class="['form-control transparent tp-1', textColorClass]"
             name="title"
             id="title"
             placeholder="Title"
+            v-model="title"
           />
         </div>
 
         <div class="form-group">
           <textarea
-            class="form-control"
+            :class="['form-control transparent tp-1', textColorClass]"
             name="content"
             id="content"
             placeholder="Content"
+            v-model="content"
           ></textarea>
         </div>
 
@@ -36,20 +38,38 @@
 </template>
 
 <script>
-import {Slider as ColorPicker} from  "vue-color";
-
+import { Slider as ColorPicker } from "vue-color";
+import util from "@/lib/util";
 import NoteListItemToolbar from "@/components/notes/note-list-item/NoteListItemToolbar.vue";
 
 export default {
   name: "NewNoteForm",
   components: { NoteListItemToolbar, ColorPicker },
-  data() {
-    return {
-      colors: {},
-      colorSwatch: ['0.9', '.80', '.65', '.50', '.35', '.20', '0.1']
+  computed: {
+    cardStyles() {
+      return {
+        backgroundColor: this.colors.hex
+      };
+    },
+    textColorClass() {
+      if (util.useDarkColor(this.colors.hex)) {
+        return "text-dark";
+      }
+      return "text-light";
     }
   },
+  data() {
+    return {
+      title: null,
+      content: null,
+      colors: { hex: "#42424f" },
+      colorSwatch: [".80", ".65", ".50", ".35", ".20"]
+    };
+  },
   methods: {
+    submitForm() {
+      console.log(this.title, this.content, this.colors.hex);
+    },
     closeForm() {
       this.$emit("close-form");
     }

@@ -9,3 +9,28 @@
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
+.vc-slider-swatch-picker.vc-slider-swatch-picker--active {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+input.transparent, 
+textarea.transparent {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  outline: none;
+  transition: background-color 0.5s ease;
+  -webkit-transition: background-color 0.5s ease;
+}
+input.transparent:focus,
+textarea.transparent:focus {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+input.transparent.tp-1,
+textarea.transparent.tp-1 {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+input.transparent.tp-1:focus,
+textarea.transparent.tp-1:focus {
+  background-color: rgba(0, 0, 0, 0.2);
+}

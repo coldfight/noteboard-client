@@ -24,19 +24,4 @@ export default {
 .card-blockquote {
   margin: 0;
 }
-
-/* Use this for when you add edit a note item */
-input {
-  background-color: rgba(0, 0, 0, 0);
-  border: none;
-  outline: none;
-  height: 30px;
-  border-radius: 5px;
-  transition: background-color 0.5s ease;
-  -webkit-transition: background-color 0.5s ease;
-}
-input:focus {
-  background-color: rgba(0, 0, 0, 0.1);
-  font-size: 16px;
-}
 </style>
