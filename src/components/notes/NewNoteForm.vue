@@ -44,6 +44,12 @@ import NoteListItemToolbar from "@/components/notes/note-list-item/NoteListItemT
 
 export default {
   name: "NewNoteForm",
+  props: {
+    boardId: {
+      type: Number,
+      required: true
+    }
+  },
   components: { NoteListItemToolbar, ColorPicker },
   computed: {
     cardStyles() {
@@ -67,19 +73,22 @@ export default {
     };
   },
   methods: {
-    submitForm() {
-      let num = Math.random()
+    async submitForm() {
+      let num = Math.random();
       let id = num.toString(36).substr(2, 9);
       // Validation on title, content, colors.hex
-      this.$store.dispatch('notes/ADD_NOTE', {
+      await this.$store.dispatch("notes/ADD_NOTE", {
         id,
         posX: 0,
         posY: 0,
         title: this.title,
         content: this.content,
         color: this.colors.hex,
-        boardId: parseInt(this.$route.params.id) // @todo: I'll feel comfortable having the boardId passed as a prop.
-      })
+        boardId: this.boardId
+      });
+
+      // @todo: I will assume that at this point, everything was successful...
+      this.closeForm();
     },
     closeForm() {
       this.$emit("close-form");

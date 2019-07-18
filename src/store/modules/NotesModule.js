@@ -21,6 +21,9 @@ const mutations = {
   },
   SET_NOTES(state, notes) {
     state.notes = notes;
+  },
+  ADD_NOTE(state, note) {
+    state.notes.push(note);
   }
 };
 
@@ -45,17 +48,11 @@ const actions = {
    * @param noteObj Expects three object properties: 'title', 'content', 'color', 'boardId'
    */
   async ADD_NOTE(context, noteObj) {
-    // Clear the list of notes before retrieving new ones.
-    // context.commit("SET_NOTES", []);
     context.commit("INCREMENT_LOADER");
     const response = await NotesService.createNote(noteObj);
-    console.log(response)
-    // if (response && !_.isEmpty(response.data)) {
-    //   // @todo: this weirdness because of firebase.. update once we use a real database
-    //   const notes = [];
-    //   _.each(response.data, item => notes.push(item));
-    //   context.commit("SET_NOTES", notes);
-    // }
+    if (response && !_.isEmpty(response.data)) {
+      context.commit("ADD_NOTE", noteObj);
+    }
     context.commit("DECREMENT_LOADER");
   }
 };
