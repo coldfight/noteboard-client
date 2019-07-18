@@ -24,6 +24,12 @@ const mutations = {
   },
   ADD_NOTE(state, note) {
     state.notes.push(note);
+  },
+  REMOVE_NOTE(state, noteFirebaseId) {
+    let arrayIndex = state.notes
+      .map(note => note.firebaseId)
+      .indexOf(noteFirebaseId);
+    state.notes.splice(arrayIndex, 1);
   }
 };
 
@@ -37,7 +43,9 @@ const actions = {
       if (response && !_.isEmpty(response.data)) {
         // @todo: this weirdness because of firebase.. update once we use a real database
         const notes = [];
-        _.each(response.data, item => notes.push(item));
+        _.each(response.data, (item, firebaseId) => {
+          (item.firebaseId = firebaseId), notes.push(item);
+        });
         context.commit("SET_NOTES", notes);
       }
     }
@@ -51,9 +59,16 @@ const actions = {
     context.commit("INCREMENT_LOADER");
     const response = await NotesService.createNote(noteObj);
     if (response && !_.isEmpty(response.data)) {
+      noteObj.fireBaseId = response.data.name;
       context.commit("ADD_NOTE", noteObj);
     }
     context.commit("DECREMENT_LOADER");
+  },
+
+  async DELETE_NOTE(context, noteFirebaseId) {
+    // context.commit("INCREMENT_LOADER");
+    await NotesService.deleteNote(noteFirebaseId);
+    context.commit("REMOVE_NOTE", noteFirebaseId);
   }
 };
 

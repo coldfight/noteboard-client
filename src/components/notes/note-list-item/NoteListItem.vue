@@ -1,34 +1,43 @@
 <template>
-  <div
-    @mousedown="itemSelected"
-    :class="[
-      'noteListItem card',
-      textColorClass,
-      { cardSelected: readyToDrag }
-    ]"
-    ref="item"
-    :style="cardStyles"
-  >
-    <NoteListItemToolbar
-      @toolbar-clicked="toggleBody"
-      @toolbar-held="toolbarHeld"
-    />
-    <AccordionTransition>
-      <NoteListItemBody v-if="showBody" :note="note" />
-    </AccordionTransition>
-  </div>
+  <FadeTransition>
+    <div
+      @mousedown="itemSelected"
+      :class="[
+        'noteListItem card',
+        textColorClass,
+        { cardSelected: readyToDrag }
+      ]"
+      ref="item"
+      :style="cardStyles"
+    >
+      <NoteListItemToolbar
+        @toolbar-clicked="toggleBody"
+        @toolbar-held="toolbarHeld"
+        @delete-note="deleteItem"
+      />
+      <AccordionTransition>
+        <NoteListItemBody v-if="showBody" :note="note" />
+      </AccordionTransition>
+    </div>
+  </FadeTransition>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
+import util from "@/lib/util";
 import NoteListItemToolbar from "@/components/notes/note-list-item/NoteListItemToolbar.vue";
 import NoteListItemBody from "@/components/notes/note-list-item/NoteListItemBody.vue";
 import AccordionTransition from "@/components/transitions/AccordionTransition.vue";
-import util from "@/lib/util";
+import FadeTransition from "@/components/transitions/FadeTransition.vue";
 
 export default {
   name: "NoteListItem",
-  components: { NoteListItemToolbar, NoteListItemBody, AccordionTransition },
+  components: {
+    NoteListItemToolbar,
+    NoteListItemBody,
+    AccordionTransition,
+    FadeTransition
+  },
   props: {
     note: {
       type: Object,
@@ -104,8 +113,13 @@ export default {
     }
   },
   methods: {
+    ...mapActions("notes", {
+      deleteNote: "DELETE_NOTE"
+    }),
     editNote() {},
-    deleteNote() {},
+    deleteItem() {
+      this.deleteNote(this.note.firebaseId);
+    },
     toggleBody() {
       this.showBody = !this.showBody;
     },

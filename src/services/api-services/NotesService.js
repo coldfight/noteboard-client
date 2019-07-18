@@ -12,5 +12,8 @@ export default {
     return Axios.post(`${RESOURCE_NAME}.json`, {
       ...noteObj
     });
+  },
+  deleteNote(noteFirebaseId) {
+    return Axios.delete(`${RESOURCE_NAME}/${noteFirebaseId}.json`);
   }
 };

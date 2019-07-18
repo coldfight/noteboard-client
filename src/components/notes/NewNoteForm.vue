@@ -39,6 +39,7 @@
 
 <script>
 import { Slider as ColorPicker } from "vue-color";
+import { mapActions } from "vuex";
 import util from "@/lib/util";
 import NoteListItemToolbar from "@/components/notes/note-list-item/NoteListItemToolbar.vue";
 
@@ -73,11 +74,14 @@ export default {
     };
   },
   methods: {
+    ...mapActions("notes", {
+      addNote: "ADD_NOTE"
+    }),
     async submitForm() {
       let num = Math.random();
       let id = num.toString(36).substr(2, 9);
       // Validation on title, content, colors.hex
-      await this.$store.dispatch("notes/ADD_NOTE", {
+      await this.addNote({
         id,
         posX: 0,
         posY: 0,
