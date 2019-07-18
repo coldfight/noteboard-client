@@ -2,6 +2,7 @@
   <div class="newNoteForm card" :style="cardStyles">
     <NoteListItemToolbar
       :action-buttons="['delete']"
+      @toolbar-held="toolbarHeld"
       @delete-note="closeForm"
     />
     <div class="card-body">
@@ -42,6 +43,7 @@ import { Slider as ColorPicker } from "vue-color";
 import { mapActions } from "vuex";
 import util from "@/lib/util";
 import NoteListItemToolbar from "@/components/notes/note-list-item/NoteListItemToolbar.vue";
+import MouseDragMixin from "@/mixins/mouseDrag.js";
 
 export default {
   name: "NewNoteForm",
@@ -49,13 +51,22 @@ export default {
     boardId: {
       type: Number,
       required: true
+    },
+    mouseClientPosition: {
+      type: Object,
+      default: () => {
+        return { x: 0, y: 0 };
+      }
     }
   },
+  mixins: [MouseDragMixin],
   components: { NoteListItemToolbar, ColorPicker },
   computed: {
     cardStyles() {
       return {
-        backgroundColor: this.colors.hex
+        backgroundColor: this.colors.hex,
+        top: `${this.position.x}px`,
+        left: `${this.position.y}px`
       };
     },
     textColorClass() {
@@ -70,8 +81,28 @@ export default {
       title: null,
       content: null,
       colors: { hex: "#42424f" },
+      position: {
+        x: 0,
+        y: 0
+      },
       colorSwatch: [".80", ".65", ".50", ".35", ".20"]
     };
+  },
+  watch: {
+    mouseClientPosition(newMousePosition, oldMousePosition) {
+      if (this.readyToDrag && this.globalMousePressed) {
+        this.position = {
+          x: Math.max(
+            0,
+            this.position.x + (newMousePosition.x - oldMousePosition.x)
+          ),
+          y: Math.max(
+            0,
+            this.position.y + (newMousePosition.y - oldMousePosition.y)
+          )
+        };
+      }
+    }
   },
   methods: {
     ...mapActions("notes", {

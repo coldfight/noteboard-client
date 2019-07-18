@@ -29,6 +29,7 @@ import NoteListItemToolbar from "@/components/notes/note-list-item/NoteListItemT
 import NoteListItemBody from "@/components/notes/note-list-item/NoteListItemBody.vue";
 import AccordionTransition from "@/components/transitions/AccordionTransition.vue";
 import FadeTransition from "@/components/transitions/FadeTransition.vue";
+import MouseDragMixin from "@/mixins/mouseDrag.js";
 
 export default {
   name: "NoteListItem",
@@ -55,6 +56,7 @@ export default {
       }
     }
   },
+  mixins: [MouseDragMixin],
   data() {
     return {
       showBody: true,
@@ -62,17 +64,11 @@ export default {
         x: this.note.posX,
         y: this.note.posY
       },
-      zIndex: 1,
-      readyToDrag: false
+      zIndex: 1
     };
   },
   watch: {
     mouseClientPosition(newMousePosition, oldMousePosition) {
-      // console.log(
-      //   "NoteListItem: mousePositionDelta()",
-      //   newDeltaPosition.x,
-      //   newDeltaPosition.y
-      // );
       if (this.readyToDrag && this.globalMousePressed) {
         this.position = {
           x: Math.max(
@@ -85,18 +81,9 @@ export default {
           )
         };
       }
-    },
-    globalMousePressed(newValue, oldValue) {
-      // console.log("NoteListItem: globalMousePressed()", newValue, oldValue);
-      if (this.readyToDrag && oldValue && !newValue) {
-        this.readyToDrag = false;
-      }
     }
   },
   computed: {
-    ...mapState({
-      globalMousePressed: "mousePressed"
-    }),
     cardStyles() {
       return {
         backgroundColor: this.note.color,
@@ -122,10 +109,6 @@ export default {
     },
     toggleBody() {
       this.showBody = !this.showBody;
-    },
-    toolbarHeld() {
-      // console.log("NoteListItem: toolbarHeld()");
-      this.readyToDrag = true;
     },
     /**
      * This gets triggered anytime the mouse clicks anywhere on the whole
