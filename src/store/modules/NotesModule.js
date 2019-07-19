@@ -30,6 +30,12 @@ const mutations = {
       .map(note => note.firebaseId)
       .indexOf(note.firebaseId);
     state.notes.splice(arrayIndex, 1);
+  },
+  UPDATE_NOTE(state, note) {
+    let arrayIndex = state.notes
+      .map(note => note.firebaseId)
+      .indexOf(note.firebaseId);
+    state.notes[arrayIndex] = note;
   }
 };
 
@@ -72,10 +78,14 @@ const actions = {
     context.commit("DECREMENT_LOADER");
   },
 
-  async UPDATE_NOTE(context, note) {
+  async UPDATE_NOTE(context, payload) {
     context.commit("INCREMENT_LOADER");
+    const note = {
+      ...payload.note,
+      ...payload.updatedProperties
+    };
     await NotesService.updateNote(note);
-    // context.commit("UPDATE_NOTE", note); // I don't need this at the moment
+    context.commit("UPDATE_NOTE", note);
     context.commit("DECREMENT_LOADER");
   }
 };

@@ -15,5 +15,6 @@ export default new Vuex.Store({
   modules: {
     noteboards,
     notes
-  }
+  },
+  strict: true
 });

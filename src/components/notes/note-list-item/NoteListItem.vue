@@ -111,9 +111,12 @@ export default {
       };
     },
     mousePressReleased() {
-      this.note.posX = this.position.x;
-      this.note.posY = this.position.y;
-      this.updateNote(this.note);
+      this.updateNote({
+        note: this.note, 
+        updatedProperties: {
+          posX: this.position.x, posY: this.position.y
+        }
+      });
     }
   }
 };
