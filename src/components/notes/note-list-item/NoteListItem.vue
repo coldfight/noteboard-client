@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapActions } from "vuex";
 import util from "@/lib/util";
 import NoteListItemToolbar from "@/components/notes/note-list-item/NoteListItemToolbar.vue";
 import NoteListItemBody from "@/components/notes/note-list-item/NoteListItemBody.vue";
@@ -48,12 +48,6 @@ export default {
       type: Number,
       required: false,
       default: 0
-    },
-    mouseClientPosition: {
-      type: Object,
-      default: () => {
-        return { x: 0, y: 0 };
-      }
     }
   },
   mixins: [MouseDragMixin],
@@ -66,22 +60,6 @@ export default {
       },
       zIndex: 1
     };
-  },
-  watch: {
-    mouseClientPosition(newMousePosition, oldMousePosition) {
-      if (this.readyToDrag && this.globalMousePressed) {
-        this.position = {
-          x: Math.max(
-            0,
-            this.position.x + (newMousePosition.x - oldMousePosition.x)
-          ),
-          y: Math.max(
-            0,
-            this.position.y + (newMousePosition.y - oldMousePosition.y)
-          )
-        };
-      }
-    }
   },
   computed: {
     cardStyles() {
@@ -118,6 +96,18 @@ export default {
       // console.log("NoteListItem: itemSelected()");
       this.zIndex = this.highestZIndex + 1;
       this.$emit("item-selected");
+    },
+    updatePosition(newMousePosition, oldMousePosition) {
+      this.position = {
+        x: Math.max(
+          0,
+          this.position.x + (newMousePosition.x - oldMousePosition.x)
+        ),
+        y: Math.max(
+          0,
+          this.position.y + (newMousePosition.y - oldMousePosition.y)
+        )
+      };
     }
   }
 };

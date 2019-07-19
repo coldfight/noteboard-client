@@ -13,6 +13,7 @@
             :class="['form-control transparent tp-1', textColorClass]"
             name="title"
             id="title"
+            autocomplete="off"
             placeholder="Title"
             v-model="title"
           />
@@ -51,12 +52,6 @@ export default {
     boardId: {
       type: Number,
       required: true
-    },
-    mouseClientPosition: {
-      type: Object,
-      default: () => {
-        return { x: 0, y: 0 };
-      }
     }
   },
   mixins: [MouseDragMixin],
@@ -88,26 +83,22 @@ export default {
       colorSwatch: [".80", ".65", ".50", ".35", ".20"]
     };
   },
-  watch: {
-    mouseClientPosition(newMousePosition, oldMousePosition) {
-      if (this.readyToDrag && this.globalMousePressed) {
-        this.position = {
-          x: Math.max(
-            0,
-            this.position.x + (newMousePosition.x - oldMousePosition.x)
-          ),
-          y: Math.max(
-            0,
-            this.position.y + (newMousePosition.y - oldMousePosition.y)
-          )
-        };
-      }
-    }
-  },
   methods: {
     ...mapActions("notes", {
       addNote: "ADD_NOTE"
     }),
+    updatePosition(newMousePosition, oldMousePosition) {
+      this.position = {
+        x: Math.max(
+          0,
+          this.position.x + (newMousePosition.x - oldMousePosition.x)
+        ),
+        y: Math.max(
+          0,
+          this.position.y + (newMousePosition.y - oldMousePosition.y)
+        )
+      };
+    },
     async submitForm() {
       let num = Math.random();
       let id = num.toString(36).substr(2, 9);
