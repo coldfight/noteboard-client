@@ -25,10 +25,10 @@ const mutations = {
   ADD_NOTE(state, note) {
     state.notes.push(note);
   },
-  REMOVE_NOTE(state, noteFirebaseId) {
+  REMOVE_NOTE(state, note) {
     let arrayIndex = state.notes
       .map(note => note.firebaseId)
-      .indexOf(noteFirebaseId);
+      .indexOf(note.firebaseId);
     state.notes.splice(arrayIndex, 1);
   }
 };
@@ -65,10 +65,18 @@ const actions = {
     context.commit("DECREMENT_LOADER");
   },
 
-  async DELETE_NOTE(context, noteFirebaseId) {
-    // context.commit("INCREMENT_LOADER");
-    await NotesService.deleteNote(noteFirebaseId);
-    context.commit("REMOVE_NOTE", noteFirebaseId);
+  async DELETE_NOTE(context, note) {
+    context.commit("INCREMENT_LOADER");
+    await NotesService.deleteNote(note);
+    context.commit("REMOVE_NOTE", note);
+    context.commit("DECREMENT_LOADER");
+  },
+
+  async UPDATE_NOTE(context, note) {
+    context.commit("INCREMENT_LOADER");
+    await NotesService.updateNote(note);
+    // context.commit("UPDATE_NOTE", note); // I don't need this at the moment
+    context.commit("DECREMENT_LOADER");
   }
 };
 

@@ -13,7 +13,12 @@ export default {
       ...noteObj
     });
   },
-  deleteNote(noteFirebaseId) {
-    return Axios.delete(`${RESOURCE_NAME}/${noteFirebaseId}.json`);
+  deleteNote(note) {
+    return Axios.delete(`${RESOURCE_NAME}/${note.firebaseId}.json`);
+  },
+  updateNote(note) {
+    return Axios.put(`${RESOURCE_NAME}/${note.firebaseId}.json`, {
+      ...note
+    });
   }
 };

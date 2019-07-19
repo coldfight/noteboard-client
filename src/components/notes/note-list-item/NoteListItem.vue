@@ -79,11 +79,12 @@ export default {
   },
   methods: {
     ...mapActions("notes", {
-      deleteNote: "DELETE_NOTE"
+      deleteNote: "DELETE_NOTE",
+      updateNote: "UPDATE_NOTE"
     }),
     editNote() {},
     deleteItem() {
-      this.deleteNote(this.note.firebaseId);
+      this.deleteNote(this.note);
     },
     toggleBody() {
       this.showBody = !this.showBody;
@@ -108,6 +109,11 @@ export default {
           this.position.y + (newMousePosition.y - oldMousePosition.y)
         )
       };
+    },
+    mousePressReleased() {
+      this.note.posX = this.position.x;
+      this.note.posY = this.position.y;
+      this.updateNote(this.note);
     }
   }
 };

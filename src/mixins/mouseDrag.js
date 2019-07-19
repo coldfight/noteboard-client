@@ -13,6 +13,7 @@ export default {
     globalMousePressed(newValue, oldValue) {
       if (this.readyToDrag && oldValue && !newValue) {
         this.readyToDrag = false;
+        this.mousePressReleased();
       }
     },
     mouseClientPosition(newMousePosition, oldMousePosition) {
@@ -36,7 +37,10 @@ export default {
       this.readyToDrag = true;
     },
     updatePosition() {
-      throw new Error("mouseDrag:methods:updatePosition must be overridden.");
+      // Override this function in the Components that want to update a specific component's position
+    },
+    mousePressReleased() {
+      // Override this function in the Components that want something to happen when mousee press is released
     }
   }
 };
