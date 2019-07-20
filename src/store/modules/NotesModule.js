@@ -65,7 +65,7 @@ const actions = {
     context.commit("INCREMENT_LOADER");
     const response = await NotesService.createNote(noteObj);
     if (response && !_.isEmpty(response.data)) {
-      noteObj.fireBaseId = response.data.name;
+      noteObj.firebaseId = response.data.name;
       context.commit("ADD_NOTE", noteObj);
     }
     context.commit("DECREMENT_LOADER");
