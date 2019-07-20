@@ -1,16 +1,15 @@
 <template>
   <div class="noteboardsPage" :style="{ width, height }">
     <div class="card text-center" style="height: 100%; overflow: hidden;">
-      <NoteboardNavigation
-        :boards="noteboards"
-        @create-new-board="createNewBoard"
-      />
+      <NoteboardNavigation :boards="noteboards" @create-new-board="createNewBoard" />
       <!-- :key is required to allow transitions to work with the same component: 
       https://forum.vuejs.org/t/solved-vue-transitions-not-working/7614-->
       <FadeTransition>
         <router-view :key="$route.params.id"></router-view>
       </FadeTransition>
     </div>
+
+    <NewNoteboardForm v-if="displayNewNoteboardForm" @close-form="closeNewNoteboardForm" />
   </div>
 </template>
 
@@ -18,17 +17,20 @@
 import { mapActions, mapState } from "vuex";
 import NoteboardNavigation from "@/components/noteboard-navigation/NoteboardNavigation.vue";
 import FadeTransition from "@/components/transitions/FadeTransition.vue";
+import NewNoteboardForm from "@/components/noteboards/NewNoteboardForm.vue";
 
 export default {
   name: "NoteboardsPage",
   components: {
     FadeTransition,
-    NoteboardNavigation
+    NoteboardNavigation,
+    NewNoteboardForm
   },
   data() {
     return {
       width: "100%",
-      height: "94vh"
+      height: "94vh",
+      displayNewNoteboardForm: false
     };
   },
   watch: {
@@ -65,7 +67,12 @@ export default {
         });
       }
     },
-    createNewBoard() {}
+    createNewBoard() {
+      this.displayNewNoteboardForm = true;
+    },
+    closeNewNoteboardForm() {
+      this.displayNewNoteboardForm = false;
+    }
   },
   async beforeMount() {
     await this.getNoteboards();

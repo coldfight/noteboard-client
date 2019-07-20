@@ -112,9 +112,10 @@ export default {
     },
     mousePressReleased() {
       this.updateNote({
-        note: this.note, 
+        note: this.note,
         updatedProperties: {
-          posX: this.position.x, posY: this.position.y
+          posX: this.position.x,
+          posY: this.position.y
         }
       });
     }
@@ -132,6 +133,6 @@ export default {
   -webkit-box-shadow: 10px 7px 21px -3px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 10px 7px 21px -3px rgba(0, 0, 0, 0.75);
   box-shadow: 10px 7px 21px -3px rgba(0, 0, 0, 0.75);
-  transform: scale(1.01);
+  transform: scale(1.05);
 }
 </style>
