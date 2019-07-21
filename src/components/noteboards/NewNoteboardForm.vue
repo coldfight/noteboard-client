@@ -1,36 +1,28 @@
 <template>
   <div class="newNoteboardForm">
-    <ModalBasic @close="close">
-      <div slot="body" class="card-body">
-        <form @submit.prevent="submitForm">
-          <div class="form-group">
-            <input
-              type="text"
-              class="form-control transparent tp-1"
-              name="name"
-              id="name"
-              autocomplete="off"
-              placeholder="Noteboard Name"
-              v-model="name"
-            />
-          </div>
-          <button type="submit" class="btn btn-primary">Create</button>
-        </form>
+    <form @submit.prevent="submitForm">
+      <h5 class="border-bottom pb-2">Create New Noteboard</h5>
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control transparent tp-1"
+          name="name"
+          id="name"
+          autocomplete="off"
+          placeholder="Noteboard Name"
+          v-model="name"
+        />
       </div>
-      <span slot="footer" />
-    </ModalBasic>
+      <button type="submit" class="btn btn-primary btn-block">Create</button>
+    </form>
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
-import ModalBasic from "@/components/modal/ModalBasic.vue";
 
 export default {
   name: "NewNoteboardForm",
-  components: {
-    ModalBasic
-  },
   data() {
     return {
       name: null

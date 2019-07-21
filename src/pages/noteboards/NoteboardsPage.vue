@@ -1,7 +1,10 @@
 <template>
   <div class="noteboardsPage" :style="{ width, height }">
     <div class="card text-center" style="height: 100%; overflow: hidden;">
-      <NoteboardNavigation :boards="noteboards" @create-new-board="createNewBoard" />
+      <NoteboardNavigation
+        :boards="noteboards"
+        @create-new-board="createNewBoard"
+      />
       <!-- :key is required to allow transitions to work with the same component: 
       https://forum.vuejs.org/t/solved-vue-transitions-not-working/7614-->
       <FadeTransition>
@@ -9,7 +12,9 @@
       </FadeTransition>
     </div>
 
-    <NewNoteboardForm v-if="displayNewNoteboardForm" @close-form="closeNewNoteboardForm" />
+    <ModalEmpty v-if="displayNewNoteboardForm" @close="closeNewNoteboardForm">
+      <NewNoteboardForm slot="body" @close-form="closeNewNoteboardForm" />
+    </ModalEmpty>
   </div>
 </template>
 
@@ -18,13 +23,15 @@ import { mapActions, mapState } from "vuex";
 import NoteboardNavigation from "@/components/noteboard-navigation/NoteboardNavigation.vue";
 import FadeTransition from "@/components/transitions/FadeTransition.vue";
 import NewNoteboardForm from "@/components/noteboards/NewNoteboardForm.vue";
+import ModalEmpty from "@/components/modals/ModalEmpty.vue";
 
 export default {
   name: "NoteboardsPage",
   components: {
     FadeTransition,
     NoteboardNavigation,
-    NewNoteboardForm
+    NewNoteboardForm,
+    ModalEmpty
   },
   data() {
     return {
