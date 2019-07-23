@@ -1,6 +1,6 @@
 <template>
   <div class="noteboardsPage" :style="{ width, height }">
-    <div class="card text-center" style="height: 100%; overflow: hidden;">
+    <div class="card" style="height: 100%; overflow: hidden;">
       <NoteboardNavigation
         :boards="noteboards"
         @create-new-board="createNewBoard"

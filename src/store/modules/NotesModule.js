@@ -56,7 +56,13 @@ const actions = {
   async ADD_NOTE(context, noteObj) {
     context.commit("INCREMENT_LOADER");
     noteObj.noteboard = `/api/noteboards/${noteObj.noteboard}`;
-    const response = await NotesService.createNote(noteObj);
+    let response;
+    try {
+      response = await NotesService.createNote(noteObj);
+    } catch (err) {
+      context.commit("DECREMENT_LOADER");
+      throw err;
+    }
     if (response && !_.isEmpty(response.data)) {
       context.commit("ADD_NOTE", response.data);
     }
