@@ -4,9 +4,7 @@ const RESOURCE_NAME = "/api/notes";
 
 export default {
   getAllByNoteboardId(noteboardId) {
-    return Axios.get(
-      `${RESOURCE_NAME}?noteboard.id=${noteboardId}`
-    );
+    return Axios.get(`${RESOURCE_NAME}?noteboard.id=${noteboardId}`);
   },
   createNote(noteObj) {
     return Axios.post(`${RESOURCE_NAME}`, {

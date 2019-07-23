@@ -26,15 +26,11 @@ const mutations = {
     state.notes.push(note);
   },
   REMOVE_NOTE(state, note) {
-    let arrayIndex = state.notes
-      .map(note => note.id)
-      .indexOf(note.id);
+    let arrayIndex = state.notes.map(note => note.id).indexOf(note.id);
     state.notes.splice(arrayIndex, 1);
   },
   UPDATE_NOTE(state, note) {
-    let arrayIndex = state.notes
-      .map(note => note.id)
-      .indexOf(note.id);
+    let arrayIndex = state.notes.map(note => note.id).indexOf(note.id);
     state.notes[arrayIndex] = note;
   }
 };
@@ -52,7 +48,7 @@ const actions = {
     }
     context.commit("DECREMENT_LOADER");
   },
-  
+
   /**
    * @param context
    * @param noteObj Expects three object properties: 'title', 'content', 'color', 'boardId'

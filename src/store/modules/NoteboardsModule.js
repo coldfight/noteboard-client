@@ -45,10 +45,7 @@ const actions = {
     context.commit("INCREMENT_LOADER");
     const response = await NoteboardsService.getNoteboard(id);
     if (response && !_.isEmpty(response.data)) {
-      context.commit(
-        "SET_CURRENT_NOTEBOARD",
-        response.data
-      );
+      context.commit("SET_CURRENT_NOTEBOARD", response.data);
     }
     context.commit("DECREMENT_LOADER");
   }
