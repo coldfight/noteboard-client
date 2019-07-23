@@ -14,9 +14,10 @@
         @toolbar-clicked="toggleBody"
         @toolbar-held="toolbarHeld"
         @delete-note="deleteItem"
+        @edit-note="toggleEditForm"
       />
       <AccordionTransition>
-        <NoteListItemBody v-if="showBody" :note="note" />
+        <NoteListItemBody v-if="showBody" :edit-mode="editNote" :note="note" />
       </AccordionTransition>
     </div>
   </FadeTransition>
@@ -58,7 +59,8 @@ export default {
         x: this.note.posX,
         y: this.note.posY
       },
-      zIndex: 1
+      zIndex: 1,
+      editNote: false
     };
   },
   computed: {
@@ -82,12 +84,19 @@ export default {
       deleteNote: "DELETE_NOTE",
       updateNote: "UPDATE_NOTE"
     }),
-    editNote() {},
+    toggleEditForm() {
+      // When we're in edit mode, make sure the body always shows.
+      this.editNote = !this.editNote;
+      this.showBody = true;
+    },
     deleteItem() {
       this.deleteNote(this.note);
     },
     toggleBody() {
-      this.showBody = !this.showBody;
+      // Only allow toggling the body if we're not in edit mode.
+      if (!this.editNote) {
+        this.showBody = !this.showBody;
+      }
     },
     /**
      * This gets triggered anytime the mouse clicks anywhere on the whole

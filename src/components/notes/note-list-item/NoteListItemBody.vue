@@ -1,19 +1,34 @@
 <template>
   <div class="card-body">
     <blockquote class="card-blockquote">
-      <h5 v-if="note.title">{{ note.title }}</h5>
-      <p>{{ note.content }}</p>
+      <!--  @todo: Transition card flip -->
+      <template v-if="editMode">
+        <NoteForm :note="note" />
+      </template>
+      <template v-else>
+        <h5 v-if="note.title">{{ note.title }}</h5>
+        <p>{{ note.content }}</p>
+      </template>
     </blockquote>
   </div>
 </template>
 
 <script>
+import NoteForm from "@/components/notes/forms/NoteForm.vue";
+
 export default {
   name: "NoteListItemBody",
+  components: {
+    NoteForm
+  },
   props: {
     note: {
       type: Object,
       required: true
+    },
+    editMode: {
+      type: Boolean,
+      default: false
     }
   }
 };
