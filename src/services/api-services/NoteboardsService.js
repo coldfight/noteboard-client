@@ -1,13 +1,19 @@
 import Axios from "axios";
 
-const RESOURCE_NAME = "/boards";
+const RESOURCE_NAME = "/api/noteboards";
 
 export default {
   getAll() {
-    return Axios.get(`${RESOURCE_NAME}.json`);
+    return Axios.get(`${RESOURCE_NAME}`)
+    .catch(err => {
+      console.log(`Could not pull the data for noteboards`, err)
+    });
   },
 
-  getBoard(id) {
-    return Axios.get(`${RESOURCE_NAME}.json?orderBy="id"&equalTo=${id}`);
+  getNoteboard(id) {
+    return Axios.get(`${RESOURCE_NAME}/${id}`)
+    .catch(err => {
+      console.log(`Could not pull the data for noteboard: ${id}`, err);
+    })
   }
 };

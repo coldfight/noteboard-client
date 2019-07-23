@@ -1,23 +1,23 @@
 import Axios from "axios";
 
-const RESOURCE_NAME = "/notes";
+const RESOURCE_NAME = "/api/notes";
 
 export default {
-  getAllByBoardId(boardId) {
+  getAllByNoteboardId(noteboardId) {
     return Axios.get(
-      `${RESOURCE_NAME}.json?orderBy="boardId"&equalTo=${boardId}`
+      `${RESOURCE_NAME}?noteboard.id=${noteboardId}`
     );
   },
   createNote(noteObj) {
-    return Axios.post(`${RESOURCE_NAME}.json`, {
+    return Axios.post(`${RESOURCE_NAME}`, {
       ...noteObj
     });
   },
   deleteNote(note) {
-    return Axios.delete(`${RESOURCE_NAME}/${note.firebaseId}.json`);
+    return Axios.delete(`${RESOURCE_NAME}/${note.id}`);
   },
   updateNote(note) {
-    return Axios.put(`${RESOURCE_NAME}/${note.firebaseId}.json`, {
+    return Axios.put(`${RESOURCE_NAME}/${note.id}`, {
       ...note
     });
   }

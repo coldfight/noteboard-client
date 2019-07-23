@@ -10,6 +10,10 @@ import store from "./store";
 
 Vue.config.productionTip = false;
 Axios.defaults.baseURL = process.env.VUE_APP_API_URL;
+Axios.defaults.headers = {
+  accept: 'application/json',
+  'content-type': 'application/json'
+};
 
 new Vue({
   router,

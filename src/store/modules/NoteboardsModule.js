@@ -43,12 +43,11 @@ const actions = {
     // Clear the currentNoteboard before retrieving the new one.
     context.commit("SET_CURRENT_NOTEBOARD", null);
     context.commit("INCREMENT_LOADER");
-    const response = await NoteboardsService.getBoard(id);
+    const response = await NoteboardsService.getNoteboard(id);
     if (response && !_.isEmpty(response.data)) {
-      // @todo: this weirdness because of firebase.. update once we use a real database
       context.commit(
         "SET_CURRENT_NOTEBOARD",
-        response.data[_.keys(response.data)[0]]
+        response.data
       );
     }
     context.commit("DECREMENT_LOADER");

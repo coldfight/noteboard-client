@@ -23,7 +23,7 @@
     <FadeTransition>
       <NewNoteForm
         v-if="displayNewNoteForm"
-        :board-id="noteboard.id"
+        :noteboard-id="noteboard.id"
         :style="{ 'z-index': layerOrderHoveringForm }"
         :mouse-client-position="mouseClientPosition"
         @close-form="closeNewNoteForm"

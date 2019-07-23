@@ -49,7 +49,7 @@ import MouseDragMixin from "@/mixins/mouseDrag.js";
 export default {
   name: "NewNoteForm",
   props: {
-    boardId: {
+    noteboardId: {
       type: Number,
       required: true
     }
@@ -100,17 +100,14 @@ export default {
       };
     },
     async submitForm() {
-      let num = Math.random();
-      let id = num.toString(36).substr(2, 9);
       // Validation on title, content, colors.hex
       await this.addNote({
-        id,
         posX: 0,
         posY: 0,
         title: this.title,
         content: this.content,
         color: this.colors.hex,
-        boardId: this.boardId
+        noteboard: this.noteboardId
       });
 
       // @todo: I will assume that at this point, everything was successful...

@@ -27,14 +27,14 @@ const mutations = {
   },
   REMOVE_NOTE(state, note) {
     let arrayIndex = state.notes
-      .map(note => note.firebaseId)
-      .indexOf(note.firebaseId);
+      .map(note => note.id)
+      .indexOf(note.id);
     state.notes.splice(arrayIndex, 1);
   },
   UPDATE_NOTE(state, note) {
     let arrayIndex = state.notes
-      .map(note => note.firebaseId)
-      .indexOf(note.firebaseId);
+      .map(note => note.id)
+      .indexOf(note.id);
     state.notes[arrayIndex] = note;
   }
 };
@@ -45,27 +45,23 @@ const actions = {
     context.commit("SET_NOTES", []);
     context.commit("INCREMENT_LOADER");
     if (noteboardId) {
-      const response = await NotesService.getAllByBoardId(noteboardId);
+      const response = await NotesService.getAllByNoteboardId(noteboardId);
       if (response && !_.isEmpty(response.data)) {
-        // @todo: this weirdness because of firebase.. update once we use a real database
-        const notes = [];
-        _.each(response.data, (item, firebaseId) => {
-          (item.firebaseId = firebaseId), notes.push(item);
-        });
-        context.commit("SET_NOTES", notes);
+        context.commit("SET_NOTES", response.data);
       }
     }
     context.commit("DECREMENT_LOADER");
   },
+  
   /**
    * @param context
    * @param noteObj Expects three object properties: 'title', 'content', 'color', 'boardId'
    */
   async ADD_NOTE(context, noteObj) {
     context.commit("INCREMENT_LOADER");
+    noteObj.noteboard = `/api/noteboards/${noteObj.noteboard}`;
     const response = await NotesService.createNote(noteObj);
     if (response && !_.isEmpty(response.data)) {
-      noteObj.firebaseId = response.data.name;
       context.commit("ADD_NOTE", noteObj);
     }
     context.commit("DECREMENT_LOADER");
