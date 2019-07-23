@@ -58,7 +58,7 @@ const actions = {
     noteObj.noteboard = `/api/noteboards/${noteObj.noteboard}`;
     const response = await NotesService.createNote(noteObj);
     if (response && !_.isEmpty(response.data)) {
-      context.commit("ADD_NOTE", noteObj);
+      context.commit("ADD_NOTE", response.data);
     }
     context.commit("DECREMENT_LOADER");
   },

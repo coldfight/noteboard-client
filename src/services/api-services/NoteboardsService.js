@@ -13,5 +13,11 @@ export default {
     return Axios.get(`${RESOURCE_NAME}/${id}`).catch(err => {
       console.log(`Could not pull the data for noteboard: ${id}`, err);
     });
+  },
+
+  createNoteboard(noteboardObj) {
+    return Axios.post(`${RESOURCE_NAME}`, {
+      ...noteboardObj
+    })
   }
 };

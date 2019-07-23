@@ -25,6 +25,9 @@ const mutations = {
   },
   SET_CURRENT_NOTEBOARD(state, currentNoteboard) {
     state.currentNoteboard = currentNoteboard;
+  },
+  ADD_NOTEBOARD(state, noteboard) {
+    state.noteboards.push(noteboard);
   }
 };
 
@@ -48,7 +51,15 @@ const actions = {
       context.commit("SET_CURRENT_NOTEBOARD", response.data);
     }
     context.commit("DECREMENT_LOADER");
-  }
+  },
+  async ADD_NOTEBOARD(context, noteboardObj) {
+    context.commit("INCREMENT_LOADER");
+    const response = await NoteboardsService.createNoteboard(noteboardObj);
+    if (response && !_.isEmpty(response.data)) {
+      context.commit("ADD_NOTEBOARD", response.data);
+    }
+    context.commit("DECREMENT_LOADER");
+  },
 };
 
 export default {
