@@ -27,8 +27,8 @@
 
 <script>
 import { mapState } from "vuex";
-// Anything greater than 7 will be registered as a mouse hold vs a mouse click
-const MOUSE_CLICK_THRESHOLD = 7;
+// Anything greater than 5 will be registered as a mouse hold vs a mouse click
+const MOUSE_CLICK_THRESHOLD = 5;
 const ACTION_EDIT = "edit";
 const ACTION_DELETE = "delete";
 
@@ -66,6 +66,7 @@ export default {
   },
   data() {
     return {
+      heldDown: false,
       timeHeldDown: 0,
       interval: null
     };
@@ -81,14 +82,12 @@ export default {
       this.$emit("delete-note");
     },
     mouseHold() {
-      // console.log("NoteListItemToolbar: mouseHold()");
-      this.$emit("toolbar-held");
       if (!this.interval) {
         this.interval = setInterval(() => {
-          // console.log(
-          //   "NoteListItemToolbar: interval running",
-          //   this.timeHeldDown
-          // );
+          if (!this.heldDown && this.timeHeldDown > MOUSE_CLICK_THRESHOLD) {
+            this.heldDown = true;
+            this.$emit("toolbar-held");
+          }
           this.timeHeldDown++;
         }, 30);
       }
@@ -103,6 +102,7 @@ export default {
       clearInterval(this.interval);
       this.interval = false;
       this.timeHeldDown = 0;
+      this.heldDown = false;
     }
   }
 };

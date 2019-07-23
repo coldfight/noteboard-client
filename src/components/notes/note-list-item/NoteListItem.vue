@@ -128,6 +128,7 @@ export default {
   width: 250px;
   text-align: left;
   position: absolute;
+  /* transition: transform 0.15s ease-in-out; */
 }
 .cardSelected {
   -webkit-box-shadow: 10px 7px 21px -3px rgba(0, 0, 0, 0.75);
