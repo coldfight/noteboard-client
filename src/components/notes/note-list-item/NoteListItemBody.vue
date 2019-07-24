@@ -3,7 +3,7 @@
     <blockquote class="card-blockquote">
       <!--  @todo: Transition card flip -->
       <template v-if="editMode">
-        <NoteForm :note="note" />
+        <NoteForm :note="note" @update-note="updateNote" />
       </template>
       <template v-else>
         <h5 v-if="note.title">{{ note.title }}</h5>
@@ -29,6 +29,11 @@ export default {
     editMode: {
       type: Boolean,
       default: false
+    }
+  },
+  methods: {
+    updateNote(payload) {
+      this.$emit("update-note", payload);
     }
   }
 };

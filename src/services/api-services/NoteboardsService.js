@@ -18,6 +18,6 @@ export default {
   createNoteboard(noteboardObj) {
     return Axios.post(`${RESOURCE_NAME}`, {
       ...noteboardObj
-    })
+    });
   }
 };

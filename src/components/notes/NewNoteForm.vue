@@ -17,7 +17,9 @@
             placeholder="Title"
             v-model="title"
           />
-          <p v-if="hasError('name')" class="text-danger font-weight-light">{{ getError('name') }}</p>
+          <p v-if="hasError('name')" class="text-danger font-weight-light">
+            {{ getError("name") }}
+          </p>
         </div>
 
         <div class="form-group">
@@ -28,7 +30,9 @@
             placeholder="Content"
             v-model="content"
           ></textarea>
-          <p v-if="hasError('content')" class="text-danger font-weight-light">{{ getError('content') }}</p>
+          <p v-if="hasError('content')" class="text-danger font-weight-light">
+            {{ getError("content") }}
+          </p>
         </div>
 
         <div class="form-group">
@@ -43,7 +47,7 @@
 
 <script>
 import { Slider as ColorPicker } from "vue-color";
-import _ from 'lodash';
+import _ from "lodash";
 import { mapActions } from "vuex";
 import util from "@/lib/util";
 import NoteListItemToolbar from "@/components/notes/note-list-item/NoteListItemToolbar.vue";
@@ -116,17 +120,17 @@ export default {
         this.closeForm();
       } catch (err) {
         this.errors = {};
-        if (_.hasIn(err, 'response.data.violations')) {
+        if (_.hasIn(err, "response.data.violations")) {
           _.each(err.response.data.violations, violation => {
             this.errors[violation.propertyPath] = violation.message;
-          })
+          });
         }
       }
     },
-    hasError (key) {
+    hasError(key) {
       return this.errors && _.hasIn(this.errors, key);
     },
-    getError (key) {
+    getError(key) {
       if (this.hasError(key)) {
         return this.errors[key];
       }

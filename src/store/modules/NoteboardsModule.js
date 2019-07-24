@@ -59,7 +59,7 @@ const actions = {
       context.commit("ADD_NOTEBOARD", response.data);
     }
     context.commit("DECREMENT_LOADER");
-  },
+  }
 };
 
 export default {

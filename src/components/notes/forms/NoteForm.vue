@@ -10,7 +10,9 @@
         placeholder="Title"
         v-model="title"
       />
-      <p v-if="hasError('name')" class="text-danger font-weight-light">{{ getError('name') }}</p>
+      <p v-if="hasError('name')" class="text-danger font-weight-light">
+        {{ getError("name") }}
+      </p>
     </div>
 
     <div class="form-group">
@@ -21,19 +23,24 @@
         placeholder="Content"
         v-model="content"
       ></textarea>
-      <p v-if="hasError('content')" class="text-danger font-weight-light">{{ getError('content') }}</p>
+      <p v-if="hasError('content')" class="text-danger font-weight-light">
+        {{ getError("content") }}
+      </p>
     </div>
 
     <div class="form-group">
       <ColorPicker v-model="colors" :swatches="colorSwatch" />
     </div>
 
-    <button type="submit" class="btn btn-primary btn-block">{{ note ? "Save" : "Create" }}</button>
+    <button type="submit" class="btn btn-primary btn-block">
+      {{ note ? "Save" : "Create" }}
+    </button>
   </form>
 </template>
 
 <script>
 // @todo: Once this component is implemented, bring it in to NewNoteForm to remove code duplication.
+import _ from "lodash";
 import { Slider as ColorPicker } from "vue-color";
 import util from "@/lib/util";
 
@@ -49,11 +56,10 @@ export default {
     ColorPicker
   },
   data() {
-    console.log(this.note)
     return {
       title: this.note ? this.note.title : "",
       content: this.note ? this.note.content : "",
-      colors: { hex: (this.note ? this.note.color : "#42424f") },
+      colors: { hex: this.note ? this.note.color : "#42424f" },
       colorSwatch: [".80", ".65", ".50", ".35", ".20"],
       errors: {}
     };
@@ -68,15 +74,25 @@ export default {
     }
   },
   methods: {
-    submitForm() {},
-    hasError (key) {
+    submitForm() {
+      // @todo: For form handling, either we pass down the errors from the parent component
+      // @todo: OR we submit to the store directly in here
+      const eventName = this.note ? "update-note" : "new-note";
+
+      this.$emit(eventName, {
+        title: this.title,
+        content: this.content,
+        color: this.colors.hex
+      });
+    },
+    hasError(key) {
       return this.errors && _.hasIn(this.errors, key);
     },
-    getError (key) {
+    getError(key) {
       if (this.hasError(key)) {
         return this.errors[key];
       }
-    },
+    }
   }
 };
 </script>

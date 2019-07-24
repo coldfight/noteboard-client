@@ -17,7 +17,12 @@
         @edit-note="toggleEditForm"
       />
       <AccordionTransition>
-        <NoteListItemBody v-if="showBody" :edit-mode="editNote" :note="note" />
+        <NoteListItemBody
+          v-if="showBody"
+          :edit-mode="editNote"
+          :note="note"
+          @update-note="updateItem"
+        />
       </AccordionTransition>
     </div>
   </FadeTransition>
@@ -89,6 +94,12 @@ export default {
       this.editNote = !this.editNote;
       this.showBody = true;
     },
+    updateItem(payload) {
+      this.updateNote({
+        note: this.note,
+        updatedProperties: payload
+      });
+    },
     deleteItem() {
       this.deleteNote(this.note);
     },
@@ -120,12 +131,9 @@ export default {
       };
     },
     mousePressReleased() {
-      this.updateNote({
-        note: this.note,
-        updatedProperties: {
-          posX: this.position.x,
-          posY: this.position.y
-        }
+      this.updateItem({
+        posX: this.position.x,
+        posY: this.position.y
       });
     }
   }

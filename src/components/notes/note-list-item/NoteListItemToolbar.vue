@@ -27,8 +27,7 @@
 
 <script>
 import { mapState } from "vuex";
-// Anything greater than 5 will be registered as a mouse hold vs a mouse click
-const MOUSE_CLICK_THRESHOLD = 5;
+const MOUSE_CLICK_THRESHOLD = 3;
 const ACTION_EDIT = "edit";
 const ACTION_DELETE = "delete";
 
